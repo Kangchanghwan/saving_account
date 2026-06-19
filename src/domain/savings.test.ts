@@ -55,3 +55,19 @@ describe('leapMonthlyContribution (2단 매칭)', () => {
     expect(leapMonthlyContribution(300_000, b2400)).toBe(18_000) // 30만×6%
   })
 })
+
+describe('공식 만기총액 재현 (정책브리핑 8% 가정)', () => {
+  const common = { monthlyDeposit: 500_000, months: 36, appliedRate: 0.08, baseRate: 0.05 }
+  it('일반형 → 2,138만원(반올림)', () => {
+    const r = maturityValue({ ...common, monthlyContribution: futureMonthlyContribution(500_000, 'general') })
+    expect(Math.round(r.total / 10_000)).toBe(2_138)
+  })
+  it('우대형 → 2,255만원(반올림)', () => {
+    const r = maturityValue({ ...common, monthlyContribution: futureMonthlyContribution(500_000, 'preferential') })
+    expect(Math.round(r.total / 10_000)).toBe(2_255)
+  })
+  it('도약 소득2,300만·월70만·60개월 기여금 합 = 198만', () => {
+    const monthly = leapMonthlyContribution(700_000, LEAP_BRACKETS[0])
+    expect(monthly * 60).toBe(1_980_000)
+  })
+})
