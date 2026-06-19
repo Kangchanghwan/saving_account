@@ -28,3 +28,32 @@ export interface MaturityResult {
   contributionInterest: number // 기여금 이자
   total: number // 총 수령액
 }
+
+/** 갈아타기 비교 입력 */
+export interface SwitchInput {
+  // 현재 도약계좌
+  leapMonthly: number // 월 납입(원). 기준 월저축액으로도 사용
+  leapMonthsPaid: number // 기납입 개월수 m
+  leapAppliedRate: number // 기본+우대(소수)
+  leapBaseRate: number // 기본금리(소수)
+  leapBracket: LeapBracket
+  // 갈아탈 미래적금
+  futureMonthly: number // 월 납입(원, ≤50만)
+  futureAppliedRate: number // 기본+우대(소수)
+  futureBaseRate: number // 기본금리(소수)
+  futureContribType: FutureContribType
+  // 옵션
+  reinvestRate: number // 회수금·남긴현금 재예치율(소수). 기본 0
+}
+
+/** 갈아타기 비교 결과 */
+export interface SwitchResult {
+  horizonMonths: number // 36
+  keepTotal: number // 유지 시 36개월 시점 총자산
+  switchTotal: number // 갈아탈 시 36개월 시점 총자산
+  profit: number // switchTotal - keepTotal (양수=이득)
+  leapRefund: MaturityResult // 도약 특별해지 환급금(기납입 m개월 기준)
+  futureMaturity: MaturityResult // 미래적금 36개월 만기
+  retainedCash: number // 갈아탈 시 미납입분 누적현금(+재예치)
+  leapFullMaturity: MaturityResult // 도약 60개월 만기(표기용)
+}
