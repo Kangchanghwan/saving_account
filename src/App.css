@@ -19,3 +19,18 @@
 .tl-bar.keep { background: #8a98b8; }
 .tl-bar.switch { background: #2e8b57; }
 .tl-cmp { position: absolute; bottom: -18px; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #2e8b57; }
+
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.input-card { border: 1px solid #e2e2e2; border-radius: 10px; padding: 14px; }
+.input-card h3 { font-size: 14px; margin: 0 0 10px; }
+.fld { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 8px 0; font-size: 13px; }
+.fld input, .fld select { padding: 5px 8px; border: 1px solid #ccc; border-radius: 6px; }
+.fld-slider { display: block; }
+.slider-head { display: flex; justify-content: space-between; align-items: baseline; }
+.slider-val { font-size: 16px; font-weight: 800; color: #2e8b57; font-variant-numeric: tabular-nums; }
+.fld-slider input[type="range"] { width: 100%; margin: 6px 0 2px; accent-color: #2e8b57; padding: 0; border: none; }
+.slider-scale { display: flex; justify-content: space-between; font-size: 10px; color: #999; }
+.rate-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { font-size: 11px; padding: 3px 9px; border-radius: 999px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+.chip.on { background: #dbe7fb; border-color: #5a8cdc; }
+@media (max-width: 640px) { .input-grid { grid-template-columns: 1fr; } }
