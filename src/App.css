@@ -3,3 +3,11 @@
 .mode-tabs { display: flex; gap: 8px; margin: 12px 0; }
 .mode-tabs button { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #ddd; background: #f4f4f4; cursor: pointer; }
 .mode-tabs button.on { background: #dbe7fb; border-color: #5a8cdc; font-weight: 700; }
+
+.verdict { border-radius: 14px; padding: 20px; text-align: center; margin: 16px 0; }
+.verdict.gain { background: #e8f5ee; border: 1px solid #2e8b57; }
+.verdict.loss { background: #fdecec; border: 1px solid #c0392b; }
+.verdict-num { font-size: 28px; font-weight: 800; margin: 6px 0; }
+.verdict.gain .verdict-num { color: #2e8b57; }
+.verdict.loss .verdict-num { color: #c0392b; }
+.verdict-sub { color: #555; font-size: 13px; margin: 0; }
