@@ -92,9 +92,9 @@ npm install -D vitest
 "test": "vitest run",
 "test:watch": "vitest"
 ```
-`vite.config.ts`를 다음으로 교체:
+`vite.config.ts`를 다음으로 교체 (Vitest 4에선 타입 augmentation이 `vitest/config`에 있으므로 그 경로 참조):
 ```ts
-/// <reference types="vitest" />
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
