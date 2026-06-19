@@ -30,4 +30,23 @@ describe('compareSwitch', () => {
     const r = compareSwitch({ ...base, futureMonthly: 0 })
     expect(r.futureMaturity.total).toBe(0)
   })
+  it('재예치율>0이면 회수금·남긴현금이 이자를 벌어 switchTotal이 커진다', () => {
+    const zero = compareSwitch(base)
+    const withRate = compareSwitch({ ...base, reinvestRate: 0.03 })
+    expect(withRate.switchTotal).toBeGreaterThan(zero.switchTotal)
+    expect(withRate.retainedCash).toBeGreaterThan(zero.retainedCash) // 남긴현금이 이자 발생
+  })
+  it('미래월납입 > 도약월납입이면 남긴현금은 0(음수 아님)', () => {
+    const r = compareSwitch({ ...base, leapMonthly: 400_000, futureMonthly: 500_000 })
+    expect(r.retainedCash).toBe(0)
+  })
+  it('기납입 0개월이면 도약 환급금은 0', () => {
+    const r = compareSwitch({ ...base, leapMonthsPaid: 0 })
+    expect(r.leapRefund.total).toBe(0)
+  })
+  it('기납입+36 > 60이면 KEEP 평가는 60개월에서 멈춘다', () => {
+    const a = compareSwitch({ ...base, leapMonthsPaid: 30 }) // 30+36=66 → 60
+    const b = compareSwitch({ ...base, leapMonthsPaid: 40 }) // 40+36=76 → 60
+    expect(a.keepTotal).toBe(b.keepTotal) // 둘 다 60개월 평가
+  })
 })

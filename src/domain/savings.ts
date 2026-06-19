@@ -5,7 +5,9 @@ import type { MaturityInput, MaturityResult, FutureContribType, LeapBracket } fr
  * 공식 워크드 예제로 검증됨(spec §11).
  */
 export function installmentInterest(monthly: number, annualRate: number, months: number): number {
-  return Math.round(monthly * (annualRate / 12) * (months * (months + 1) / 2))
+  const m = Math.max(0, months)
+  const p = Math.max(0, monthly)
+  return Math.round(p * (annualRate / 12) * (m * (m + 1) / 2))
 }
 
 const FUTURE_CONTRIB: Record<FutureContribType, { rate: number; cap: number }> = {
@@ -16,22 +18,24 @@ const FUTURE_CONTRIB: Record<FutureContribType, { rate: number; cap: number }> =
 
 export function futureMonthlyContribution(monthlyDeposit: number, type: FutureContribType): number {
   const { rate, cap } = FUTURE_CONTRIB[type]
-  return Math.min(monthlyDeposit * rate, cap)
+  const dep = Math.max(0, monthlyDeposit)
+  return Math.round(Math.min(dep * rate, cap))
 }
 
 const LEAP_MONTHLY_MAX = 700_000
 
 export function leapMonthlyContribution(monthlyDeposit: number, bracket: LeapBracket): number {
-  const capped = Math.min(monthlyDeposit, LEAP_MONTHLY_MAX)
+  const dep = Math.max(0, monthlyDeposit)
+  const capped = Math.min(dep, LEAP_MONTHLY_MAX)
   const inLimit = Math.min(capped, bracket.matchLimit) * bracket.rateInLimit
   const extra = Math.max(0, capped - bracket.matchLimit) * bracket.extraRate
-  return inLimit + extra
+  return Math.round(inLimit + extra)
 }
 
 export function maturityValue(input: MaturityInput): MaturityResult {
-  const principal = input.monthlyDeposit * input.months
+  const principal = Math.round(input.monthlyDeposit * input.months)
   const principalInterest = installmentInterest(input.monthlyDeposit, input.appliedRate, input.months)
-  const contribution = input.monthlyContribution * input.months
+  const contribution = Math.round(input.monthlyContribution * input.months)
   const contributionInterest = installmentInterest(input.monthlyContribution, input.baseRate, input.months)
   const total = principal + principalInterest + contribution + contributionInterest
   return { principal, principalInterest, contribution, contributionInterest, total }

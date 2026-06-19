@@ -41,6 +41,17 @@ describe('futureMonthlyContribution', () => {
   })
 })
 
+describe('엣지 케이스 (none 구간·음수 입력)', () => {
+  it('도약 none 구간이면 기여금 0', () => {
+    const none = LEAP_BRACKETS.find(b => b.id === 'none')!
+    expect(leapMonthlyContribution(700_000, none)).toBe(0)
+  })
+  it('음수 개월·음수 납입은 0 (이자/기여금 모두)', () => {
+    expect(installmentInterest(500_000, 0.08, -5)).toBe(0)
+    expect(leapMonthlyContribution(-100_000, LEAP_BRACKETS[0])).toBe(0)
+  })
+})
+
 describe('leapMonthlyContribution (2단 매칭)', () => {
   const b2400 = LEAP_BRACKETS[0]
   it('공식 예제: 소득2,400만↓ 월70만 → 40만×6% + 30만×3% = 33,000', () => {
