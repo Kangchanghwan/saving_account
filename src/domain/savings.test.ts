@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { installmentInterest, maturityValue } from './savings'
+import { installmentInterest, maturityValue, futureMonthlyContribution } from './savings'
 
 describe('installmentInterest (적립식 단리)', () => {
   it('공식 환산치: 월50만 × 36개월 × 14.4% = 세전이자 3,996,000원', () => {
@@ -24,5 +24,18 @@ describe('maturityValue', () => {
     expect(r.contribution).toBe(1_080_000) // 3만×36
     expect(r.contributionInterest).toBe(83_250) // 3만×(0.05/12)×666
     expect(r.total).toBe(21_383_250)
+  })
+})
+
+describe('futureMonthlyContribution', () => {
+  it('일반형 6%, 월한도 3만', () => {
+    expect(futureMonthlyContribution(500_000, 'general')).toBe(30_000) // min(3만,3만)
+    expect(futureMonthlyContribution(300_000, 'general')).toBe(18_000) // 30만×6%
+  })
+  it('우대형 12%, 월한도 6만', () => {
+    expect(futureMonthlyContribution(500_000, 'preferential')).toBe(60_000)
+  })
+  it('미지급형 0', () => {
+    expect(futureMonthlyContribution(500_000, 'none')).toBe(0)
   })
 })
