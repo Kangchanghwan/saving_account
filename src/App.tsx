@@ -8,6 +8,7 @@ import { CompareTimeline } from './components/CompareTimeline'
 import { BreakdownTable } from './components/BreakdownTable'
 import { CompareChart } from './components/CompareChart'
 import { Disclaimer } from './components/Disclaimer'
+import { AssumptionsFold } from './components/AssumptionsFold'
 import { ProductInputCard } from './components/ProductInputCard'
 import { RateChecklist } from './components/RateChecklist'
 import { BANKS } from './data/banks'
@@ -39,6 +40,11 @@ export default function App() {
 
   const result = compareSwitch(buildSwitchInput(inputs))
   const set = (patch: Partial<AppInputs>) => setInputs((s) => ({ ...s, ...patch }))
+
+  const warnings: string[] = []
+  if (inputs.leapMonthly > PRODUCTS.leap.monthlyMax) warnings.push('도약계좌 월 납입 한도(70만원)를 초과했습니다.')
+  if (inputs.futureMonthly > PRODUCTS.future.monthlyMax) warnings.push('미래적금 월 납입 한도(50만원)를 초과했습니다.')
+  if (inputs.leapMonthsPaid < 0 || inputs.leapMonthsPaid > 60) warnings.push('기납입 개월은 0~60 사이여야 합니다.')
 
   return (
     <main className="app">
@@ -95,10 +101,14 @@ export default function App() {
           />
         </ProductInputCard>
       </div>
+      {warnings.length > 0 && (
+        <ul className="warnings">{warnings.map((w) => <li key={w}>{w}</li>)}</ul>
+      )}
       <section className="results">
         <CompareChart keep={result.keepTotal} sw={result.switchTotal} />
         <BreakdownTable result={result} />
       </section>
+      <AssumptionsFold />
       <Disclaimer />
     </main>
   )
