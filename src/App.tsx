@@ -38,7 +38,8 @@ export default function App() {
     window.history.replaceState(null, '', `?${qs}`)
   }, [inputs])
 
-  const result = compareSwitch(buildSwitchInput(inputs))
+  const calcInputs = inputs.mode === 'new' ? { ...inputs, leapMonthsPaid: 0 } : inputs
+  const result = compareSwitch(buildSwitchInput(calcInputs))
   const set = (patch: Partial<AppInputs>) => setInputs((s) => ({ ...s, ...patch }))
 
   const warnings: string[] = []
@@ -50,11 +51,11 @@ export default function App() {
     <main className="app">
       <h1>청년적금 갈아타기 손익계산기</h1>
       <ModeTabs mode={inputs.mode} onChange={(mode) => set({ mode })} />
-      <VerdictBanner profit={result.profit} horizonMonths={result.horizonMonths} />
+      <VerdictBanner profit={result.profit} horizonMonths={result.horizonMonths} mode={inputs.mode} />
       <CompareTimeline leapMonthsPaid={inputs.leapMonthsPaid} />
       <div className="input-grid">
         <ProductInputCard
-          title="① 현재 보유: 청년도약계좌"
+          title={inputs.mode === 'switch' ? '① 현재 보유: 청년도약계좌' : '① 청년도약계좌'}
           banks={BANKS}
           bankId={inputs.leapBankId}
           onBankChange={(leapBankId) => set({ leapBankId })}
@@ -62,10 +63,12 @@ export default function App() {
           monthlyMax={PRODUCTS.leap.monthlyMax}
           onMonthlyChange={(leapMonthly) => set({ leapMonthly })}
         >
-          <label className="fld"><span>기납입 개월</span>
-            <input type="number" min={0} max={60} value={inputs.leapMonthsPaid}
-              onChange={(e) => set({ leapMonthsPaid: Number(e.target.value) })} />
-          </label>
+          {inputs.mode === 'switch' && (
+            <label className="fld"><span>기납입 개월</span>
+              <input type="number" min={0} max={60} value={inputs.leapMonthsPaid}
+                onChange={(e) => set({ leapMonthsPaid: Number(e.target.value) })} />
+            </label>
+          )}
           <label className="fld"><span>소득구간(기여금)</span>
             <select value={inputs.leapBracketId} onChange={(e) => set({ leapBracketId: e.target.value })}>
               {LEAP_BRACKETS.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
@@ -79,7 +82,7 @@ export default function App() {
         </ProductInputCard>
 
         <ProductInputCard
-          title="② 갈아탈: 청년미래적금"
+          title={inputs.mode === 'switch' ? '② 갈아탈: 청년미래적금' : '② 청년미래적금'}
           banks={BANKS}
           bankId={inputs.futureBankId}
           onBankChange={(futureBankId) => set({ futureBankId })}
