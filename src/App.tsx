@@ -1,122 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
+import { DEFAULT_INPUTS, decodeInputs, encodeInputs, type AppInputs } from './state/inputs'
+import { buildSwitchInput } from './state/selectors'
+import { compareSwitch } from './domain/compare'
+import { ModeTabs } from './components/ModeTabs'
+import { VerdictBanner } from './components/VerdictBanner'
+import { CompareTimeline } from './components/CompareTimeline'
+import { BreakdownTable } from './components/BreakdownTable'
+import { Disclaimer } from './components/Disclaimer'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [inputs, setInputs] = useState<AppInputs>(() =>
+    decodeInputs(window.location.search.replace(/^\?/, '')) || DEFAULT_INPUTS,
+  )
+
+  useEffect(() => {
+    const qs = encodeInputs(inputs)
+    window.history.replaceState(null, '', `?${qs}`)
+  }, [inputs])
+
+  const result = compareSwitch(buildSwitchInput(inputs))
+  const set = (patch: Partial<AppInputs>) => setInputs((s) => ({ ...s, ...patch }))
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    <main className="app">
+      <h1>청년적금 갈아타기 손익계산기</h1>
+      <ModeTabs mode={inputs.mode} onChange={(mode) => set({ mode })} />
+      <VerdictBanner profit={result.profit} horizonMonths={result.horizonMonths} />
+      <CompareTimeline leapMonthsPaid={inputs.leapMonthsPaid} />
+      {/* 입력 카드/결과는 후속 Task에서 연결 */}
+      <BreakdownTable result={result} />
+      <Disclaimer />
+    </main>
   )
 }
-
-export default App
