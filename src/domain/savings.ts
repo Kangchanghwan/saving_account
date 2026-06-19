@@ -1,4 +1,4 @@
-import type { MaturityInput, MaturityResult, FutureContribType } from './types'
+import type { MaturityInput, MaturityResult, FutureContribType, LeapBracket } from './types'
 
 /**
  * 적립식 단리 이자. 1회차는 n개월, n회차는 1개월 예치 → 합계계수 n(n+1)/2.
@@ -17,6 +17,15 @@ const FUTURE_CONTRIB: Record<FutureContribType, { rate: number; cap: number }> =
 export function futureMonthlyContribution(monthlyDeposit: number, type: FutureContribType): number {
   const { rate, cap } = FUTURE_CONTRIB[type]
   return Math.min(monthlyDeposit * rate, cap)
+}
+
+const LEAP_MONTHLY_MAX = 700_000
+
+export function leapMonthlyContribution(monthlyDeposit: number, bracket: LeapBracket): number {
+  const capped = Math.min(monthlyDeposit, LEAP_MONTHLY_MAX)
+  const inLimit = Math.min(capped, bracket.matchLimit) * bracket.rateInLimit
+  const extra = Math.max(0, capped - bracket.matchLimit) * bracket.extraRate
+  return inLimit + extra
 }
 
 export function maturityValue(input: MaturityInput): MaturityResult {

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { installmentInterest, maturityValue, futureMonthlyContribution } from './savings'
+import { installmentInterest, maturityValue, futureMonthlyContribution, leapMonthlyContribution } from './savings'
+import { LEAP_BRACKETS } from '../data/leapBrackets'
 
 describe('installmentInterest (적립식 단리)', () => {
   it('공식 환산치: 월50만 × 36개월 × 14.4% = 세전이자 3,996,000원', () => {
@@ -37,5 +38,20 @@ describe('futureMonthlyContribution', () => {
   })
   it('미지급형 0', () => {
     expect(futureMonthlyContribution(500_000, 'none')).toBe(0)
+  })
+})
+
+describe('leapMonthlyContribution (2단 매칭)', () => {
+  const b2400 = LEAP_BRACKETS[0]
+  it('공식 예제: 소득2,400만↓ 월70만 → 40만×6% + 30만×3% = 33,000', () => {
+    expect(leapMonthlyContribution(700_000, b2400)).toBe(33_000)
+  })
+  it('각 구간 월70만 납입 시 monthlyCap과 일치', () => {
+    for (const b of LEAP_BRACKETS) {
+      expect(leapMonthlyContribution(700_000, b)).toBe(b.monthlyCap)
+    }
+  })
+  it('한도 미만 납입은 납입액 기준으로만 매칭', () => {
+    expect(leapMonthlyContribution(300_000, b2400)).toBe(18_000) // 30만×6%
   })
 })
