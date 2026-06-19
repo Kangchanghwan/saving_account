@@ -6,6 +6,7 @@ import { ModeTabs } from './components/ModeTabs'
 import { VerdictBanner } from './components/VerdictBanner'
 import { CompareTimeline } from './components/CompareTimeline'
 import { BreakdownTable } from './components/BreakdownTable'
+import { CompareChart } from './components/CompareChart'
 import { Disclaimer } from './components/Disclaimer'
 import { ProductInputCard } from './components/ProductInputCard'
 import { RateChecklist } from './components/RateChecklist'
@@ -94,7 +95,10 @@ export default function App() {
           />
         </ProductInputCard>
       </div>
-      <BreakdownTable result={result} />
+      <section className="results">
+        <CompareChart keep={result.keepTotal} sw={result.switchTotal} />
+        <BreakdownTable result={result} />
+      </section>
       <Disclaimer />
     </main>
   )
