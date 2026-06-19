@@ -18,7 +18,9 @@
 .tl-bar { height: 26px; border-radius: 6px; color: #fff; font-size: 12px; display: flex; align-items: center; padding: 0 10px; white-space: nowrap; min-width: 90px; }
 .tl-bar.keep { background: #8a98b8; }
 .tl-bar.switch { background: #2e8b57; }
-.tl-cmp { position: absolute; bottom: -18px; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #2e8b57; }
+.tl-cmp-row { margin-top: 2px; }
+.tl-track { position: relative; flex: 1; height: 14px; }
+.tl-cmp { position: absolute; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: #2e8b57; white-space: nowrap; }
 
 .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
 .input-card { border: 1px solid #e2e2e2; border-radius: 10px; padding: 14px; }

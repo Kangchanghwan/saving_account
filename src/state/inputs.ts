@@ -42,6 +42,12 @@ export function encodeInputs(s: AppInputs): string {
   return p.toString()
 }
 
+function num(v: string | null, fallback: number): number {
+  if (v == null || v === '') return fallback
+  const n = Number(v)
+  return Number.isFinite(n) ? n : fallback
+}
+
 export function decodeInputs(query: string): AppInputs {
   if (!query) return DEFAULT_INPUTS
   const p = new URLSearchParams(query)
@@ -50,13 +56,13 @@ export function decodeInputs(query: string): AppInputs {
     mode: (p.get('m') as Mode) || DEFAULT_INPUTS.mode,
     leapBankId: p.get('lb') || DEFAULT_INPUTS.leapBankId,
     leapPrefs: p.has('lp') ? splitPrefs(p.get('lp')) : DEFAULT_INPUTS.leapPrefs,
-    leapMonthly: Number(p.get('lm') ?? DEFAULT_INPUTS.leapMonthly),
-    leapMonthsPaid: Number(p.get('lmp') ?? DEFAULT_INPUTS.leapMonthsPaid),
+    leapMonthly: num(p.get('lm'), DEFAULT_INPUTS.leapMonthly),
+    leapMonthsPaid: num(p.get('lmp'), DEFAULT_INPUTS.leapMonthsPaid),
     leapBracketId: p.get('lbr') || DEFAULT_INPUTS.leapBracketId,
     futureBankId: p.get('fb') || DEFAULT_INPUTS.futureBankId,
     futurePrefs: p.has('fp') ? splitPrefs(p.get('fp')) : DEFAULT_INPUTS.futurePrefs,
-    futureMonthly: Number(p.get('fm') ?? DEFAULT_INPUTS.futureMonthly),
+    futureMonthly: num(p.get('fm'), DEFAULT_INPUTS.futureMonthly),
     futureContribType: (p.get('fc') as FutureContribType) || DEFAULT_INPUTS.futureContribType,
-    reinvestRate: Number(p.get('ri') ?? DEFAULT_INPUTS.reinvestRate),
+    reinvestRate: num(p.get('ri'), DEFAULT_INPUTS.reinvestRate),
   }
 }

@@ -24,6 +24,7 @@ export default function App() {
   const [inputs, setInputs] = useState<AppInputs>(() =>
     decodeInputs(window.location.search.replace(/^\?/, '')) || DEFAULT_INPUTS,
   )
+  const set = (patch: Partial<AppInputs>) => setInputs((s) => ({ ...s, ...patch }))
 
   useEffect(() => {
     if (inputs.futurePrefs.length === 0) {
@@ -40,7 +41,6 @@ export default function App() {
 
   const calcInputs = inputs.mode === 'new' ? { ...inputs, leapMonthsPaid: 0 } : inputs
   const result = compareSwitch(buildSwitchInput(calcInputs))
-  const set = (patch: Partial<AppInputs>) => setInputs((s) => ({ ...s, ...patch }))
 
   const warnings: string[] = []
   if (inputs.leapMonthly > PRODUCTS.leap.monthlyMax) warnings.push('도약계좌 월 납입 한도(70만원)를 초과했습니다.')

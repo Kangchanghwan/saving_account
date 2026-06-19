@@ -14,7 +14,12 @@ export function CompareTimeline({ leapMonthsPaid }: { leapMonthsPaid: number }) 
         <span className="tl-tag">갈아타면</span>
         <div className="tl-bar switch" style={{ width: pct(futureFromNow) }}>미래적금 → {futureFromNow}개월 만기</div>
       </div>
-      <div className="tl-cmp" style={{ left: `calc(74px + ${pct(futureFromNow)})` }}>↑ 3년 뒤 비교</div>
+      <div className="tl-row tl-cmp-row">
+        <span className="tl-tag" aria-hidden="true"></span>
+        <div className="tl-track">
+          <div className="tl-cmp" style={{ left: pct(futureFromNow) }}>↑ 3년 뒤 비교</div>
+        </div>
+      </div>
     </section>
   )
 }

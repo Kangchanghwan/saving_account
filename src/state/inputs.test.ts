@@ -11,4 +11,12 @@ describe('inputs URL 직렬화', () => {
   it('빈 쿼리는 기본값', () => {
     expect(decodeInputs('')).toEqual(DEFAULT_INPUTS)
   })
+  it('잘못된 숫자 파라미터는 기본값으로 폴백(NaN 방지)', () => {
+    const r = decodeInputs('lm=abc&lmp=&fm=xyz&ri=zzz')
+    expect(r.leapMonthly).toBe(DEFAULT_INPUTS.leapMonthly)
+    expect(r.leapMonthsPaid).toBe(DEFAULT_INPUTS.leapMonthsPaid)
+    expect(r.futureMonthly).toBe(DEFAULT_INPUTS.futureMonthly)
+    expect(r.reinvestRate).toBe(DEFAULT_INPUTS.reinvestRate)
+    expect(Number.isNaN(r.leapMonthly)).toBe(false)
+  })
 })
