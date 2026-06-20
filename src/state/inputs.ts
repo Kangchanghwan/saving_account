@@ -14,6 +14,8 @@ export interface AppInputs {
   leapPaidPrincipal: number    // 잔액 기준 모드: 지금까지 입금된 원금(원)
   leapMonthsRemaining: number  // 잔액 기준 모드: 남은 납입개월
   leapFutureMonthly: number    // 잔액 기준 모드: 향후 월 납입액(원)
+  leapRateDirect: boolean      // 도약 우대금리 직접입력 사용 여부
+  leapRateOverride: number     // 직접입력 시 총 우대 %p (decimal, 예 0.008)
   leapBracketId: string
   // 미래
   futureBankId: string
@@ -29,6 +31,7 @@ export const DEFAULT_INPUTS: AppInputs = {
   leapBankId: 'shinhan', leapPrefs: [], leapInputMode: 'balance',
   leapMonthly: 700_000, leapMonthsPaid: 14,
   leapPaidPrincipal: 9_800_000, leapMonthsRemaining: 46, leapFutureMonthly: 700_000,
+  leapRateDirect: false, leapRateOverride: 0,
   leapBracketId: 'i2400',
   futureBankId: 'shinhan', futurePrefs: [], futureMonthly: 500_000, futureContribType: 'general',
   reinvestRate: 0,
@@ -45,6 +48,8 @@ export function encodeInputs(s: AppInputs): string {
   p.set('lpp', String(s.leapPaidPrincipal))
   p.set('lmr', String(s.leapMonthsRemaining))
   p.set('lfm', String(s.leapFutureMonthly))
+  p.set('lrd', String(s.leapRateDirect))
+  p.set('lro', String(s.leapRateOverride))
   p.set('lbr', s.leapBracketId)
   p.set('fb', s.futureBankId)
   p.set('fp', s.futurePrefs.join('.'))
@@ -81,6 +86,8 @@ export function decodeInputs(query: string): AppInputs {
     leapPaidPrincipal: num(p.get('lpp'), DEFAULT_INPUTS.leapPaidPrincipal),
     leapMonthsRemaining: num(p.get('lmr'), DEFAULT_INPUTS.leapMonthsRemaining),
     leapFutureMonthly: num(p.get('lfm'), DEFAULT_INPUTS.leapFutureMonthly),
+    leapRateDirect: p.get('lrd') === 'true',
+    leapRateOverride: num(p.get('lro'), DEFAULT_INPUTS.leapRateOverride),
     leapBracketId: p.get('lbr') || DEFAULT_INPUTS.leapBracketId,
     futureBankId: p.get('fb') || DEFAULT_INPUTS.futureBankId,
     futurePrefs: p.has('fp') ? splitPrefs(p.get('fp')) : DEFAULT_INPUTS.futurePrefs,
