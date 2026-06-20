@@ -56,7 +56,7 @@ export function ScenarioControls({
   const balElapsed = LEAP_TERM - balRemaining
   const balAvg = balElapsed > 0 ? Math.round(inputs.leapPaidPrincipal / balElapsed) : 0
   const leapProduct = leapBank?.leap
-  const leapHeadroom = leapProduct ? leapProduct.maxRate - leapProduct.baseRate : 0
+  const leapHeadroom = leapProduct ? Math.max(0, leapProduct.maxRate - leapProduct.baseRate) : 0
   const overridePct = Math.round(inputs.leapRateOverride * 1000) / 10
   // 직접입력을 켜는 순간 현재 칩 합계(우대 보너스)를 초기값으로 시드
   const chipBonus = leapProduct
@@ -146,7 +146,7 @@ export function ScenarioControls({
                   onChange={(e) =>
                     set(
                       e.target.checked
-                        ? { leapRateDirect: true, leapRateOverride: chipBonus }
+                        ? { leapRateDirect: true, leapRateOverride: inputs.leapRateOverride || chipBonus }
                         : { leapRateDirect: false },
                     )
                   }
