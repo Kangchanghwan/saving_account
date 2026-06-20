@@ -16,15 +16,14 @@ describe('App 스모크', () => {
     fireEvent.click(screen.getByText('미래적금 단독 계산'))
     expect(screen.getByRole('tab', { selected: true }).textContent).toContain('미래적금')
   })
-  it('기납입 금액 모드로 전환하면 금액 슬라이더가 보인다', () => {
+  it('도약/미래 2단 컬럼 헤더가 보인다', () => {
     render(<App />)
-    expect(screen.queryByLabelText('도약 기납입 금액')).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: '금액' }))
-    expect(screen.getByLabelText('도약 기납입 금액')).toBeTruthy()
+    expect(screen.getByText('도약계좌')).toBeTruthy()
+    expect(screen.getByText('미래적금')).toBeTruthy()
   })
-  it('추가 월납입액·남은 납입개월 슬라이더가 보인다', () => {
+  it('기납입 개월 슬라이더와 남은개월 안내가 보인다', () => {
     render(<App />)
-    expect(screen.getByLabelText('도약 추가 월납입액')).toBeTruthy()
-    expect(screen.getByLabelText('도약 남은 납입개월')).toBeTruthy()
+    expect(screen.getByLabelText('기납입 개월')).toBeTruthy()
+    expect(screen.getByText(/남은 \d+개월 · 만기 60개월/)).toBeTruthy()
   })
 })

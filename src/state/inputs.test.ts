@@ -19,18 +19,9 @@ describe('inputs URL 직렬화', () => {
     expect(r.reinvestRate).toBe(DEFAULT_INPUTS.reinvestRate)
     expect(Number.isNaN(r.leapMonthly)).toBe(false)
   })
-  it('신규 도약 필드 encode→decode 라운드트립', () => {
-    const s = { ...DEFAULT_INPUTS, leapPaidMode: 'amount' as const, leapPaidAmount: 15_000_000, leapFutureMonthly: 300_000, leapMonthsRemaining: 20 }
-    const round = decodeInputs(encodeInputs(s))
-    expect(round.leapPaidMode).toBe('amount')
-    expect(round.leapPaidAmount).toBe(15_000_000)
-    expect(round.leapFutureMonthly).toBe(300_000)
-    expect(round.leapMonthsRemaining).toBe(20)
-  })
-  it('잘못된 신규 숫자 파라미터는 기본값 폴백', () => {
-    const r = decodeInputs('lpa=abc&lfm=&lmr=xyz')
-    expect(r.leapPaidAmount).toBe(DEFAULT_INPUTS.leapPaidAmount)
-    expect(r.leapFutureMonthly).toBe(DEFAULT_INPUTS.leapFutureMonthly)
-    expect(r.leapMonthsRemaining).toBe(DEFAULT_INPUTS.leapMonthsRemaining)
+  it('옛 공유 URL의 제거된 파라미터(lpm/lpa/lfm/lmr)는 무시되고 깨지지 않음', () => {
+    const r = decodeInputs('lm=700000&lmp=20&lpm=amount&lpa=15000000&lfm=300000&lmr=20')
+    expect(r.leapMonthly).toBe(700_000)
+    expect(r.leapMonthsPaid).toBe(20)
   })
 })
