@@ -1,19 +1,19 @@
 :root {
-  /* 라이트 플랫 테마 토큰 */
-  --bg: #ffffff;
-  --bg-2: #f7f8fa;
-  --text: #1b1d21;
-  --text-2: #6b7280;
-  --text-3: #9aa1ac;
-  --border: #e6e8ec;
-  --border-2: #eff1f4;
-  --accent: #2563eb;
-  --success: #16794a;
-  --success-bg: #f1f9f4;
-  --success-border: #bfe6cd;
-  --danger: #c0392b;
-  --danger-bg: #fdf3f2;
-  --danger-border: #f3cfca;
+  /* 다크 플랫 테마 토큰 (스크린샷 기준) */
+  --bg: #1a1b1e;
+  --bg-2: #26282c;
+  --text: #f1f2f4;
+  --text-2: #c9ccd1;
+  --text-3: #888b91;
+  --border: #34363b;
+  --border-2: #2c2e32;
+  --accent: #5b8def;
+  --success: #8ec06a;
+  --success-bg: #1f271b;
+  --success-border: #3c4c30;
+  --danger: #e07a6e;
+  --danger-bg: #2a1d1b;
+  --danger-border: #4a322e;
   --radius: 8px;
   --radius-lg: 12px;
 
