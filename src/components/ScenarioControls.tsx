@@ -58,7 +58,7 @@ export function ScenarioControls({
   const leapProduct = leapBank?.leap
   const leapHeadroom = leapProduct ? Math.max(0, leapProduct.maxRate - leapProduct.baseRate) : 0
   const overridePct = Math.round(inputs.leapRateOverride * 1000) / 10
-  // 직접입력을 켜는 순간 현재 칩 합계(우대 보너스)를 초기값으로 시드
+  // 직접입력을 처음 켤 때(override 0) 현재 칩 합계(우대 보너스)를 초기값으로 시드
   const chipBonus = leapProduct
     ? Math.max(0, appliedRate(leapProduct, inputs.leapPrefs) - leapProduct.baseRate)
     : 0
