@@ -3,8 +3,8 @@ import { compareSwitch } from './compare'
 import { LEAP_BRACKETS } from '../data/leapBrackets'
 
 const base = {
-  leapMonthly: 700_000, leapMonthsPaid: 14, leapAppliedRate: 0.05, leapBaseRate: 0.045,
-  leapBracket: LEAP_BRACKETS[0],
+  leapAvgMonthly: 700_000, leapMonthsPaid: 14, leapFutureMonthly: 700_000, leapMonthsRemaining: 46,
+  leapAppliedRate: 0.05, leapBaseRate: 0.045, leapBracket: LEAP_BRACKETS[0],
   futureMonthly: 500_000, futureAppliedRate: 0.08, futureBaseRate: 0.05, futureContribType: 'general' as const,
   reinvestRate: 0,
 }
@@ -42,8 +42,8 @@ describe('compareSwitch', () => {
     expect(withRate.switchTotal).toBeGreaterThan(zero.switchTotal)
     expect(withRate.retainedCash).toBeGreaterThan(zero.retainedCash) // 남긴현금이 이자 발생
   })
-  it('미래월납입 > 도약월납입이면 남긴현금은 0(음수 아님)', () => {
-    const r = compareSwitch({ ...base, leapMonthly: 400_000, futureMonthly: 500_000 })
+  it('미래월납입 > 도약 추가월납입이면 남긴현금은 0(음수 아님)', () => {
+    const r = compareSwitch({ ...base, leapFutureMonthly: 400_000, futureMonthly: 500_000 })
     expect(r.retainedCash).toBe(0)
   })
   it('기납입 0개월이면 도약 환급금은 0', () => {
@@ -54,5 +54,21 @@ describe('compareSwitch', () => {
     const a = compareSwitch({ ...base, leapMonthsPaid: 30 }) // 30+36=66 → 60
     const b = compareSwitch({ ...base, leapMonthsPaid: 40 }) // 40+36=76 → 60
     expect(a.keepTotal).toBe(b.keepTotal) // 둘 다 60개월 평가
+  })
+  it('남은개월을 줄이면 유지측 만기 평가가 작아진다', () => {
+    const full = compareSwitch(base)
+    const short = compareSwitch({ ...base, leapMonthsRemaining: 6 })
+    expect(short.keepMonths).toBe(20) // 14 + min(6,36)
+    expect(short.keepTotal).toBeLessThan(full.keepTotal)
+  })
+  it('추가월납입을 과거보다 낮추면 유지측 원금이 줄어든다', () => {
+    const same = compareSwitch(base)
+    const lower = compareSwitch({ ...base, leapFutureMonthly: 300_000 })
+    expect(lower.keep.principal).toBeLessThan(same.keep.principal)
+  })
+  it('기납입+남은개월 합이 60을 넘으면 만기는 60개월에서 멈춘다', () => {
+    const a = compareSwitch({ ...base, leapMonthsPaid: 40, leapMonthsRemaining: 30 }) // 70 → 60
+    const b = compareSwitch({ ...base, leapMonthsPaid: 40, leapMonthsRemaining: 20 }) // 60
+    expect(a.leapFullMaturity.total).toBe(b.leapFullMaturity.total)
   })
 })

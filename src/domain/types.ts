@@ -32,8 +32,10 @@ export interface MaturityResult {
 /** 갈아타기 비교 입력 */
 export interface SwitchInput {
   // 현재 도약계좌
-  leapMonthly: number // 월 납입(원). 기준 월저축액으로도 사용
+  leapAvgMonthly: number // 과거 평균 월납입(원). 기납입 원금 = avg × 기납입개월
   leapMonthsPaid: number // 기납입 개월수 m
+  leapFutureMonthly: number // 남은 기간 추가 월납입(원)
+  leapMonthsRemaining: number // 만기까지 남은 납입개월 R (총 m+R ≤ 60)
   leapAppliedRate: number // 기본+우대(소수)
   leapBaseRate: number // 기본금리(소수)
   leapBracket: LeapBracket
@@ -49,7 +51,7 @@ export interface SwitchInput {
 /** 갈아타기 비교 결과 */
 export interface SwitchResult {
   horizonMonths: number // 36
-  keepMonths: number // 유지 시 36개월 시점의 도약 누적 개월 = min(m+36, 60)
+  keepMonths: number // 유지 시 36개월 호라이즌의 도약 누적 개월 = m + min(36, R)
   keepTotal: number // 유지 시 36개월 시점 총자산
   switchTotal: number // 갈아탈 시 36개월 시점 총자산
   profit: number // switchTotal - keepTotal (양수=이득)
