@@ -38,7 +38,9 @@ export function buildSwitchInput(s: AppInputs): SwitchInput {
     leapMonthsPaid: mPaid,
     leapFutureMonthly: future,
     leapMonthsRemaining: remaining,
-    leapAppliedRate: appliedRate(leapProduct, s.leapPrefs),
+    leapAppliedRate: s.leapRateDirect
+      ? appliedRate(leapProduct, s.leapPrefs, s.leapRateOverride)
+      : appliedRate(leapProduct, s.leapPrefs),
     leapBaseRate: leapProduct.baseRate,
     leapBracket: bracket,
     futureMonthly: s.futureMonthly,
