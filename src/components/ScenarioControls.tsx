@@ -103,12 +103,13 @@ export function ScenarioControls({
                     <label>지금까지 입금된 원금</label>
                     <div className="num-row">
                       <input
-                        type="number" min={0} step={1}
+                        type="number" min={0} step={1} max={(PRODUCTS.leap.monthlyMax * LEAP_TERM) / 10_000}
                         value={Math.round(inputs.leapPaidPrincipal / 10_000)}
                         aria-label="지금까지 입금된 원금(만원)"
-                        onChange={(e) =>
-                          set({ leapPaidPrincipal: Math.max(0, Math.floor(Number(e.target.value) || 0)) * 10_000 })
-                        }
+                        onChange={(e) => {
+                          const manwon = Math.max(0, Math.floor(Number(e.target.value) || 0))
+                          set({ leapPaidPrincipal: Math.min(manwon * 10_000, PRODUCTS.leap.monthlyMax * LEAP_TERM) })
+                        }}
                       />
                       <span className="num-unit">만원</span>
                     </div>
