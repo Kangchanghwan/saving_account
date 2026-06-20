@@ -10,6 +10,10 @@ export interface AppInputs {
   leapMonthly: number
   leapMonthsPaid: number
   leapBracketId: string
+  leapPaidMode: 'months' | 'amount'
+  leapPaidAmount: number
+  leapFutureMonthly: number
+  leapMonthsRemaining: number
   // 미래
   futureBankId: string
   futurePrefs: string[]
@@ -22,6 +26,7 @@ export interface AppInputs {
 export const DEFAULT_INPUTS: AppInputs = {
   mode: 'switch',
   leapBankId: 'shinhan', leapPrefs: [], leapMonthly: 700_000, leapMonthsPaid: 14, leapBracketId: 'i2400',
+  leapPaidMode: 'months', leapPaidAmount: 9_800_000, leapFutureMonthly: 700_000, leapMonthsRemaining: 46,
   futureBankId: 'shinhan', futurePrefs: [], futureMonthly: 500_000, futureContribType: 'general',
   reinvestRate: 0,
 }
@@ -34,6 +39,10 @@ export function encodeInputs(s: AppInputs): string {
   p.set('lm', String(s.leapMonthly))
   p.set('lmp', String(s.leapMonthsPaid))
   p.set('lbr', s.leapBracketId)
+  p.set('lpm', s.leapPaidMode)
+  p.set('lpa', String(s.leapPaidAmount))
+  p.set('lfm', String(s.leapFutureMonthly))
+  p.set('lmr', String(s.leapMonthsRemaining))
   p.set('fb', s.futureBankId)
   p.set('fp', s.futurePrefs.join('.'))
   p.set('fm', String(s.futureMonthly))
@@ -59,6 +68,10 @@ export function decodeInputs(query: string): AppInputs {
     leapMonthly: num(p.get('lm'), DEFAULT_INPUTS.leapMonthly),
     leapMonthsPaid: num(p.get('lmp'), DEFAULT_INPUTS.leapMonthsPaid),
     leapBracketId: p.get('lbr') || DEFAULT_INPUTS.leapBracketId,
+    leapPaidMode: (p.get('lpm') as AppInputs['leapPaidMode']) || DEFAULT_INPUTS.leapPaidMode,
+    leapPaidAmount: num(p.get('lpa'), DEFAULT_INPUTS.leapPaidAmount),
+    leapFutureMonthly: num(p.get('lfm'), DEFAULT_INPUTS.leapFutureMonthly),
+    leapMonthsRemaining: num(p.get('lmr'), DEFAULT_INPUTS.leapMonthsRemaining),
     futureBankId: p.get('fb') || DEFAULT_INPUTS.futureBankId,
     futurePrefs: p.has('fp') ? splitPrefs(p.get('fp')) : DEFAULT_INPUTS.futurePrefs,
     futureMonthly: num(p.get('fm'), DEFAULT_INPUTS.futureMonthly),
