@@ -81,14 +81,34 @@ export function ScenarioControls({
           </select>
         </Field>
         {switchMode && (
-          <Slider label="도약 월 납입액" value={inputs.leapMonthly} max={PRODUCTS.leap.monthlyMax}
+          <Slider label="도약 (과거) 월 납입액" value={inputs.leapMonthly} max={PRODUCTS.leap.monthlyMax}
             onChange={(leapMonthly) => set({ leapMonthly })} />
         )}
         <Slider label="미래 월 납입액" value={inputs.futureMonthly} max={PRODUCTS.future.monthlyMax}
           onChange={(futureMonthly) => set({ futureMonthly })} />
         {switchMode && (
+          <Field label="도약 기납입 입력">
+            <div className="seg">
+              <button className={inputs.leapPaidMode === 'months' ? 'on' : ''} onClick={() => set({ leapPaidMode: 'months' })}>개월</button>
+              <button className={inputs.leapPaidMode === 'amount' ? 'on' : ''} onClick={() => set({ leapPaidMode: 'amount' })}>금액</button>
+            </div>
+          </Field>
+        )}
+        {switchMode && (
           <Slider label="도약 기납입 개월" value={inputs.leapMonthsPaid} max={60} step={1} unit="개월"
-            onChange={(leapMonthsPaid) => set({ leapMonthsPaid })} />
+            onChange={(leapMonthsPaid) => set({ leapMonthsPaid, leapMonthsRemaining: Math.min(inputs.leapMonthsRemaining, Math.max(0, 60 - leapMonthsPaid)) })} />
+        )}
+        {switchMode && inputs.leapPaidMode === 'amount' && (
+          <Slider label="도약 기납입 금액" value={inputs.leapPaidAmount} max={inputs.leapMonthly * 60} step={10_000}
+            onChange={(leapPaidAmount) => set({ leapPaidAmount })} />
+        )}
+        {switchMode && (
+          <Slider label="도약 추가 월납입액" value={inputs.leapFutureMonthly} max={PRODUCTS.leap.monthlyMax} step={10_000}
+            onChange={(leapFutureMonthly) => set({ leapFutureMonthly })} />
+        )}
+        {switchMode && (
+          <Slider label="도약 남은 납입개월" value={inputs.leapMonthsRemaining} max={Math.max(0, 60 - inputs.leapMonthsPaid)} step={1} unit="개월"
+            onChange={(leapMonthsRemaining) => set({ leapMonthsRemaining })} />
         )}
       </div>
 

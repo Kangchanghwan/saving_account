@@ -1,13 +1,21 @@
 import type { MaturityInput, MaturityResult, FutureContribType, LeapBracket } from './types'
 
 /**
- * 적립식 단리 이자. 1회차는 n개월, n회차는 1개월 예치 → 합계계수 n(n+1)/2.
- * 공식 워크드 예제로 검증됨(spec §11).
+ * 적립식 단리 이자 구간 계산.
+ * count개월 연속 납입분의 이자. 각 납입분이 자기 구간 종료 후 tail개월을 더 적립.
+ * 합계계수 = S(tail+count) − S(tail), S(x)=x(x+1)/2.
  */
-export function installmentInterest(monthly: number, annualRate: number, months: number): number {
-  const m = Math.max(0, months)
+export function phaseInterest(monthly: number, annualRate: number, count: number, tail: number): number {
+  const c = Math.max(0, count)
+  const t = Math.max(0, tail)
   const p = Math.max(0, monthly)
-  return Math.round(p * (annualRate / 12) * (m * (m + 1) / 2))
+  const S = (x: number) => (x * (x + 1)) / 2
+  return Math.round(p * (annualRate / 12) * (S(t + c) - S(t)))
+}
+
+/** 적립식 단리 이자. 1회차는 n개월…n회차는 1개월 → 합계계수 n(n+1)/2. (phaseInterest tail=0) */
+export function installmentInterest(monthly: number, annualRate: number, months: number): number {
+  return phaseInterest(monthly, annualRate, months, 0)
 }
 
 const FUTURE_CONTRIB: Record<FutureContribType, { rate: number; cap: number }> = {
@@ -37,6 +45,26 @@ export function maturityValue(input: MaturityInput): MaturityResult {
   const principalInterest = installmentInterest(input.monthlyDeposit, input.appliedRate, input.months)
   const contribution = Math.round(input.monthlyContribution * input.months)
   const contributionInterest = installmentInterest(input.monthlyContribution, input.baseRate, input.months)
+  const total = principal + principalInterest + contribution + contributionInterest
+  return { principal, principalInterest, contribution, contributionInterest, total }
+}
+
+/** 도약 2단계 적립 만기수령액: 과거분(avgMonthly·pastMonths) + 미래분(futureMonthly·futureMonths). */
+export function leapTwoPhaseMaturity(p: {
+  avgMonthly: number; pastMonths: number;
+  futureMonthly: number; futureMonths: number;
+  appliedRate: number; baseRate: number; bracket: LeapBracket;
+}): MaturityResult {
+  const principal = Math.round(p.avgMonthly * p.pastMonths + p.futureMonthly * p.futureMonths)
+  const principalInterest =
+    phaseInterest(p.avgMonthly, p.appliedRate, p.pastMonths, p.futureMonths) +
+    phaseInterest(p.futureMonthly, p.appliedRate, p.futureMonths, 0)
+  const pastContribM = leapMonthlyContribution(p.avgMonthly, p.bracket)
+  const futureContribM = leapMonthlyContribution(p.futureMonthly, p.bracket)
+  const contribution = Math.round(pastContribM * p.pastMonths + futureContribM * p.futureMonths)
+  const contributionInterest =
+    phaseInterest(pastContribM, p.baseRate, p.pastMonths, p.futureMonths) +
+    phaseInterest(futureContribM, p.baseRate, p.futureMonths, 0)
   const total = principal + principalInterest + contribution + contributionInterest
   return { principal, principalInterest, contribution, contributionInterest, total }
 }
