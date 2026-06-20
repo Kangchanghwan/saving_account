@@ -24,4 +24,30 @@ describe('inputs URL 직렬화', () => {
     expect(r.leapMonthly).toBe(700_000)
     expect(r.leapMonthsPaid).toBe(20)
   })
+  it('신규 잔액모드 필드 encode→decode 라운드트립', () => {
+    const s = {
+      ...DEFAULT_INPUTS,
+      leapInputMode: 'balance' as const,
+      leapPaidPrincipal: 18_900_000,
+      leapMonthsRemaining: 32,
+      leapFutureMonthly: 300_000,
+    }
+    const r = decodeInputs(encodeInputs(s))
+    expect(r.leapInputMode).toBe('balance')
+    expect(r.leapPaidPrincipal).toBe(18_900_000)
+    expect(r.leapMonthsRemaining).toBe(32)
+    expect(r.leapFutureMonthly).toBe(300_000)
+  })
+  it('기본 입력 모드는 balance', () => {
+    expect(DEFAULT_INPUTS.leapInputMode).toBe('balance')
+    expect(decodeInputs('').leapInputMode).toBe('balance')
+  })
+  it('레거시 공유 URL(lim 없음, lmp 있음)은 monthly로 폴백', () => {
+    const r = decodeInputs('lm=700000&lmp=20')
+    expect(r.leapInputMode).toBe('monthly')
+  })
+  it('lim이 명시되면 그 값을 사용', () => {
+    expect(decodeInputs('lim=monthly&lmp=20').leapInputMode).toBe('monthly')
+    expect(decodeInputs('lim=balance&lpp=18900000').leapInputMode).toBe('balance')
+  })
 })
