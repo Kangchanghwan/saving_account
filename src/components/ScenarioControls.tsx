@@ -5,6 +5,7 @@ import { LEAP_BRACKETS } from '../data/leapBrackets'
 import { PRODUCTS } from '../data/products'
 import { RateChecklist } from './RateChecklist'
 import { manwon } from '../format'
+import { appliedRate } from '../domain/rates'
 
 const LEAP_TERM = 60
 
@@ -54,6 +55,13 @@ export function ScenarioControls({
   const balRemaining = Math.min(Math.max(0, inputs.leapMonthsRemaining), LEAP_TERM)
   const balElapsed = LEAP_TERM - balRemaining
   const balAvg = balElapsed > 0 ? Math.round(inputs.leapPaidPrincipal / balElapsed) : 0
+  const leapProduct = leapBank?.leap
+  const leapHeadroom = leapProduct ? leapProduct.maxRate - leapProduct.baseRate : 0
+  const overridePct = Math.round(inputs.leapRateOverride * 1000) / 10
+  // 직접입력을 켜는 순간 현재 칩 합계(우대 보너스)를 초기값으로 시드
+  const chipBonus = leapProduct
+    ? Math.max(0, appliedRate(leapProduct, inputs.leapPrefs) - leapProduct.baseRate)
+    : 0
   return (
     <section className="controls">
       <div className={`ctrl-cols${switchMode ? '' : ' single'}`}>
@@ -131,10 +139,41 @@ export function ScenarioControls({
             </div>
             <div className="chips-block">
               <div className="chips-label">도약계좌 우대금리</div>
+              <label className="direct-rate-row">
+                <input
+                  type="checkbox"
+                  checked={inputs.leapRateDirect}
+                  onChange={(e) =>
+                    set(
+                      e.target.checked
+                        ? { leapRateDirect: true, leapRateOverride: chipBonus }
+                        : { leapRateDirect: false },
+                    )
+                  }
+                />
+                우대금리 직접 입력
+              </label>
+              {inputs.leapRateDirect && (
+                <div className="direct-rate-input">
+                  <span>총 우대</span>
+                  <input
+                    type="number" min={0} max={Math.round(leapHeadroom * 1000) / 10} step={0.1}
+                    value={overridePct}
+                    aria-label="총 우대 %p"
+                    onChange={(e) => {
+                      const pct = Math.max(0, Number(e.target.value) || 0)
+                      const dec = Math.min(pct / 100, leapHeadroom)
+                      set({ leapRateOverride: dec })
+                    }}
+                  />
+                  <span className="num-unit">%p</span>
+                </div>
+              )}
               <RateChecklist
-                items={leapBank?.leap?.preferential ?? []}
+                items={leapProduct?.preferential ?? []}
                 checked={inputs.leapPrefs}
                 onToggle={(id) => set({ leapPrefs: toggle(inputs.leapPrefs, id) })}
+                disabled={inputs.leapRateDirect}
               />
             </div>
           </div>
