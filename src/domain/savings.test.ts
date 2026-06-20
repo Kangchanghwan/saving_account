@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { installmentInterest, maturityValue, futureMonthlyContribution, leapMonthlyContribution } from './savings'
+import { installmentInterest, maturityValue, futureMonthlyContribution, leapMonthlyContribution, phaseInterest } from './savings'
 import { LEAP_BRACKETS } from '../data/leapBrackets'
 
 describe('installmentInterest (적립식 단리)', () => {
@@ -80,5 +80,24 @@ describe('공식 만기총액 재현 (정책브리핑 8% 가정)', () => {
   it('도약 소득2,300만·월70만·60개월 기여금 합 = 198만', () => {
     const monthly = leapMonthlyContribution(700_000, LEAP_BRACKETS[0])
     expect(monthly * 60).toBe(1_980_000)
+  })
+})
+
+describe('phaseInterest (구간 단리 이자)', () => {
+  it('tail=0이면 installmentInterest와 동일', () => {
+    expect(phaseInterest(500_000, 0.144, 36, 0)).toBe(installmentInterest(500_000, 0.144, 36))
+    expect(phaseInterest(700_000, 0.05, 14, 0)).toBe(installmentInterest(700_000, 0.05, 14))
+  })
+  it('명시 예제: 월10만 × 0.12 × (S(5)-S(3)=9) = 9,000', () => {
+    expect(phaseInterest(100_000, 0.12, 2, 3)).toBe(9_000)
+  })
+  it('구간 분해 합 = 단일구간 (과거 14 + 미래 36 = 50개월)', () => {
+    const split = phaseInterest(700_000, 0.05, 14, 36) + phaseInterest(700_000, 0.05, 36, 0)
+    expect(split).toBe(installmentInterest(700_000, 0.05, 50))
+    expect(split).toBe(3_718_750)
+  })
+  it('음수 입력은 0', () => {
+    expect(phaseInterest(-100, 0.05, 5, 3)).toBe(0)
+    expect(phaseInterest(100_000, 0.05, -5, 3)).toBe(0)
   })
 })
