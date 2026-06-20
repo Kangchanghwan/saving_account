@@ -49,9 +49,11 @@ export interface SwitchInput {
 /** 갈아타기 비교 결과 */
 export interface SwitchResult {
   horizonMonths: number // 36
+  keepMonths: number // 유지 시 36개월 시점의 도약 누적 개월 = min(m+36, 60)
   keepTotal: number // 유지 시 36개월 시점 총자산
   switchTotal: number // 갈아탈 시 36개월 시점 총자산
   profit: number // switchTotal - keepTotal (양수=이득)
+  keep: MaturityResult // 유지측 36개월 시점 평가(분해)
   leapRefund: MaturityResult // 도약 특별해지 환급금(기납입 m개월 기준)
   futureMaturity: MaturityResult // 미래적금 36개월 만기
   retainedCash: number // 갈아탈 시 미납입분 누적현금(+재예치)

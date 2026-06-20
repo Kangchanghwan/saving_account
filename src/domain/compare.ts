@@ -47,7 +47,7 @@ export function compareSwitch(input: SwitchInput): SwitchResult {
   })
 
   return {
-    horizonMonths: HORIZON, keepTotal, switchTotal, profit: switchTotal - keepTotal,
-    leapRefund, futureMaturity, retainedCash, leapFullMaturity,
+    horizonMonths: HORIZON, keepMonths, keepTotal, switchTotal, profit: switchTotal - keepTotal,
+    keep: keepEval, leapRefund, futureMaturity, retainedCash, leapFullMaturity,
   }
 }

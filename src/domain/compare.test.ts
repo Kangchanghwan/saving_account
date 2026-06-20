@@ -22,6 +22,12 @@ describe('compareSwitch', () => {
   it('남긴 현금 = (도약월납입 - 미래월납입) × 36 (재예치 0)', () => {
     expect(compareSwitch(base).retainedCash).toBe(200_000 * 36)
   })
+  it('keep 분해의 total은 keepTotal과 일치하고 keepMonths = min(m+36,60)', () => {
+    const r = compareSwitch(base)
+    expect(r.keep.total).toBe(r.keepTotal)
+    expect(r.keepMonths).toBe(50) // 14 + 36
+    expect(compareSwitch({ ...base, leapMonthsPaid: 30 }).keepMonths).toBe(60) // 30+36 → clamp 60
+  })
   it('profit = switchTotal - keepTotal', () => {
     const r = compareSwitch(base)
     expect(r.profit).toBeCloseTo(r.switchTotal - r.keepTotal, 5)
