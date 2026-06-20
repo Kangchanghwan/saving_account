@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { installmentInterest, maturityValue, futureMonthlyContribution, leapMonthlyContribution, phaseInterest } from './savings'
+import { installmentInterest, maturityValue, futureMonthlyContribution, leapMonthlyContribution, phaseInterest, leapTwoPhaseMaturity } from './savings'
 import { LEAP_BRACKETS } from '../data/leapBrackets'
 
 describe('installmentInterest (적립식 단리)', () => {
@@ -99,5 +99,30 @@ describe('phaseInterest (구간 단리 이자)', () => {
   it('음수 입력은 0', () => {
     expect(phaseInterest(-100, 0.05, 5, 3)).toBe(0)
     expect(phaseInterest(100_000, 0.05, -5, 3)).toBe(0)
+  })
+})
+
+describe('leapTwoPhaseMaturity (도약 2단계 만기)', () => {
+  const b2400 = LEAP_BRACKETS[0]
+  it('미래분 0이면 단일구간 환급금과 동일 (월70만·14개월)', () => {
+    const r = leapTwoPhaseMaturity({
+      avgMonthly: 700_000, pastMonths: 14, futureMonthly: 0, futureMonths: 0,
+      appliedRate: 0.05, baseRate: 0.045, bracket: b2400,
+    })
+    expect(r.principal).toBe(9_800_000) // 70만×14
+    expect(r.principalInterest).toBe(306_250) // installmentInterest(70만,0.05,14)
+    expect(r.contribution).toBe(462_000) // 33,000×14
+    expect(r.contributionInterest).toBe(12_994) // 33,000×(0.045/12)×105
+    expect(r.total).toBe(10_581_244)
+  })
+  it('2단계: 과거 월60만 28개월 + 미래 월30만 32개월', () => {
+    const r = leapTwoPhaseMaturity({
+      avgMonthly: 600_000, pastMonths: 28, futureMonthly: 300_000, futureMonths: 32,
+      appliedRate: 0.05, baseRate: 0.045, bracket: b2400,
+    })
+    expect(r.principal).toBe(26_400_000) // 60만×28 + 30만×32
+    // 기여금: leapContrib(60만)=30,000 ×28 + leapContrib(30만)=18,000 ×32
+    expect(r.contribution).toBe(1_416_000)
+    expect(r.total).toBeGreaterThan(r.principal)
   })
 })

@@ -48,3 +48,23 @@ export function maturityValue(input: MaturityInput): MaturityResult {
   const total = principal + principalInterest + contribution + contributionInterest
   return { principal, principalInterest, contribution, contributionInterest, total }
 }
+
+/** 도약 2단계 적립 만기수령액: 과거분(avgMonthly·pastMonths) + 미래분(futureMonthly·futureMonths). */
+export function leapTwoPhaseMaturity(p: {
+  avgMonthly: number; pastMonths: number;
+  futureMonthly: number; futureMonths: number;
+  appliedRate: number; baseRate: number; bracket: LeapBracket;
+}): MaturityResult {
+  const principal = Math.round(p.avgMonthly * p.pastMonths + p.futureMonthly * p.futureMonths)
+  const principalInterest =
+    phaseInterest(p.avgMonthly, p.appliedRate, p.pastMonths, p.futureMonths) +
+    phaseInterest(p.futureMonthly, p.appliedRate, p.futureMonths, 0)
+  const pastContribM = leapMonthlyContribution(p.avgMonthly, p.bracket)
+  const futureContribM = leapMonthlyContribution(p.futureMonthly, p.bracket)
+  const contribution = Math.round(pastContribM * p.pastMonths + futureContribM * p.futureMonths)
+  const contributionInterest =
+    phaseInterest(pastContribM, p.baseRate, p.pastMonths, p.futureMonths) +
+    phaseInterest(futureContribM, p.baseRate, p.futureMonths, 0)
+  const total = principal + principalInterest + contribution + contributionInterest
+  return { principal, principalInterest, contribution, contributionInterest, total }
+}
