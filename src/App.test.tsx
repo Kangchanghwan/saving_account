@@ -21,8 +21,14 @@ describe('App 스모크', () => {
     expect(screen.getByText('도약계좌')).toBeTruthy()
     expect(screen.getByText('미래적금')).toBeTruthy()
   })
-  it('기납입 개월 슬라이더와 남은개월 안내가 보인다', () => {
+  it('기본은 잔액 기준 입력(원금/추정평균)이 보인다', () => {
     render(<App />)
+    expect(screen.getByLabelText('지금까지 입금된 원금(만원)')).toBeTruthy()
+    expect(screen.getByText(/경과 \d+개월 · 추정 평균/)).toBeTruthy()
+  })
+  it('월납입 기준으로 토글하면 기납입 개월 슬라이더가 보인다', () => {
+    render(<App />)
+    fireEvent.click(screen.getByText('월납입 기준'))
     expect(screen.getByLabelText('기납입 개월')).toBeTruthy()
     expect(screen.getByText(/남은 \d+개월 · 만기 60개월/)).toBeTruthy()
   })
