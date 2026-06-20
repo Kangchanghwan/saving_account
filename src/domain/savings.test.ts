@@ -123,6 +123,8 @@ describe('leapTwoPhaseMaturity (도약 2단계 만기)', () => {
     expect(r.principal).toBe(26_400_000) // 60만×28 + 30만×32
     // 기여금: leapContrib(60만)=30,000 ×28 + leapContrib(30만)=18,000 ×32
     expect(r.contribution).toBe(1_416_000)
-    expect(r.total).toBeGreaterThan(r.principal)
+    expect(r.principalInterest).toBe(3_915_000) // phaseInterest(60만,0.05,28,32)=3,255,000 + phaseInterest(30만,0.05,32,0)=660,000
+    expect(r.contributionInterest).toBe(182_115) // phaseInterest(30000,0.045,28,32)=146,475 + phaseInterest(18000,0.045,32,0)=35,640
+    expect(r.total).toBe(31_913_115)
   })
 })
