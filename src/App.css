@@ -38,10 +38,10 @@
 .chips-label { font-size: 11px; color: var(--text-3); margin-bottom: 6px; letter-spacing: .03em; }
 .rate-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 11.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); color: var(--text-2); cursor: pointer; }
-.chip.on { background: #eef4ff; border-color: #c7d9f7; color: var(--accent); font-weight: 600; }
+.chip.on { background: #1d2a45; border-color: #335089; color: #9cc0ff; font-weight: 600; }
 
 /* warnings */
-.warnings { list-style: none; margin: 0 0 14px; padding: 9px 13px; background: #fff8ec; border: 1px solid #f0d9a8; border-radius: var(--radius); font-size: 12px; color: #8a5a00; }
+.warnings { list-style: none; margin: 0 0 14px; padding: 9px 13px; background: #2a2410; border: 1px solid #4a4220; border-radius: var(--radius); font-size: 12px; color: #d8be6a; }
 .warnings li { margin: 2px 0; }
 
 /* comparison boxes */
@@ -51,7 +51,7 @@
 .box-title { font-size: 13px; font-weight: 600; padding-bottom: 8px; margin-bottom: 6px; border-bottom: 1px solid var(--border-2); }
 .brow { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; padding: 3px 0; }
 .brow span:last-child { font-variant-numeric: tabular-nums; font-weight: 500; white-space: nowrap; }
-.brow.muted { color: var(--text-3); font-size: 11.5px; }
+.brow.muted { color: var(--success); font-size: 11.5px; }
 .brow.muted span:last-child { font-weight: 400; }
 .brow.strong { border-top: 1.5px solid var(--border); margin-top: 5px; padding-top: 7px; font-size: 14px; font-weight: 600; }
 .box-foot { text-align: right; font-size: 11px; color: var(--text-3); margin-top: 6px; }
