@@ -28,7 +28,12 @@
 
 /* scenario controls */
 .controls { margin-bottom: 18px; }
-.ctrl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin-bottom: 12px; }
+.ctrl-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+.ctrl-cols.single { grid-template-columns: 1fr; max-width: 440px; }
+.ctrl-col { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px; background: var(--bg); }
+.ctrl-col-head { font-size: 13px; font-weight: 600; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 1px solid var(--border-2); }
+.ctrl-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.ctrl-hint { font-size: 11px; color: var(--text-3); }
 .ctrl { display: flex; flex-direction: column; gap: 5px; }
 .ctrl > label { font-size: 12px; color: var(--text-2); }
 .ctrl-head { display: flex; justify-content: space-between; align-items: baseline; }
@@ -65,6 +70,6 @@
 .note p { margin: 0 0 2px; }
 
 @media (max-width: 640px) {
-  .ctrl-grid { grid-template-columns: 1fr; }
+  .ctrl-cols { grid-template-columns: 1fr; }
   .boxes { grid-template-columns: 1fr; }
 }

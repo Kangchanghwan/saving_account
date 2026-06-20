@@ -18,16 +18,12 @@ export function buildSwitchInput(s: AppInputs): SwitchInput {
   const bracket = LEAP_BRACKETS.find((b) => b.id === s.leapBracketId) ?? LEAP_BRACKETS[0]
 
   const mPaid = Math.max(0, s.leapMonthsPaid)
-  const avgMonthly = s.leapPaidMode === 'amount'
-    ? (mPaid > 0 ? s.leapPaidAmount / mPaid : 0)
-    : s.leapMonthly
-  const remaining = Math.min(Math.max(0, s.leapMonthsRemaining), Math.max(0, LEAP_TERM - mPaid))
 
   return {
-    leapAvgMonthly: avgMonthly,
+    leapAvgMonthly: s.leapMonthly,
     leapMonthsPaid: mPaid,
-    leapFutureMonthly: s.leapFutureMonthly,
-    leapMonthsRemaining: remaining,
+    leapFutureMonthly: s.leapMonthly,
+    leapMonthsRemaining: Math.max(0, LEAP_TERM - mPaid),
     leapAppliedRate: appliedRate(leapProduct, s.leapPrefs),
     leapBaseRate: leapProduct.baseRate,
     leapBracket: bracket,
