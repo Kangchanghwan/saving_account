@@ -17,6 +17,11 @@
 .diff.loss .diff-num { color: var(--danger); }
 .diff-sub { font-size: 11.5px; color: var(--text-3); margin-top: 5px; }
 
+/* single-result headline (미래적금 단독 모드) */
+.result-headline { border: 1px solid var(--border); background: var(--bg-2); border-radius: var(--radius-lg); padding: 18px; text-align: center; margin-bottom: 18px; }
+.rh-label { font-size: 13px; color: var(--text-2); margin-bottom: 4px; }
+.rh-num { font-size: 30px; font-weight: 600; letter-spacing: -0.5px; color: var(--text); }
+
 /* scenario controls */
 .controls { margin-bottom: 18px; }
 .ctrl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin-bottom: 12px; }
@@ -41,6 +46,7 @@
 
 /* comparison boxes */
 .boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.boxes.single { grid-template-columns: 1fr; max-width: 440px; }
 .box { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px; background: var(--bg); }
 .box-title { font-size: 13px; font-weight: 600; padding-bottom: 8px; margin-bottom: 6px; border-bottom: 1px solid var(--border-2); }
 .brow { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; padding: 3px 0; }

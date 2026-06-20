@@ -17,8 +17,26 @@ function yieldPct(total: number, principal: number): string {
 }
 
 export function ComparisonBoxes({ r, mode }: { r: SwitchResult; mode: 'switch' | 'new' }) {
-  const keepTitle = mode === 'new' ? '① 청년도약계좌' : '① 도약계좌 유지'
-  const switchTitle = mode === 'new' ? '② 청년미래적금' : '② 미래적금 갈아타기'
+  // 신규 모드: 도약계좌 신규가입 종료 → 비교 없이 미래적금 단독 만기 수령액만 표시
+  if (mode === 'new') {
+    const f = r.futureMaturity
+    return (
+      <div className="boxes single">
+        <div className="box">
+          <div className="box-title">청년미래적금 만기 수령액 (36개월)</div>
+          <Row label="원금" value={manwon(f.principal)} />
+          <Row label="이자 (비과세)" value={manwon(f.principalInterest)} muted />
+          <Row label="정부기여금" value={manwon(f.contribution)} muted />
+          <Row label="기여금 이자" value={manwon(f.contributionInterest)} muted />
+          <Row label="최종 수령" value={manwon(f.total)} strong />
+          <div className="box-foot">{yieldPct(f.total, f.principal)}</div>
+        </div>
+      </div>
+    )
+  }
+
+  const keepTitle = '① 도약계좌 유지'
+  const switchTitle = '② 미래적금 갈아타기'
 
   // 갈아타기측 원금합(=내 돈) — 재예치율 0이면 retainedCash는 전액 원금
   const switchPrincipal = r.leapRefund.principal + r.futureMaturity.principal + r.retainedCash

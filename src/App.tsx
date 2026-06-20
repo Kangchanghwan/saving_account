@@ -9,6 +9,7 @@ import { DiffBanner } from './components/DiffBanner'
 import { ScenarioControls } from './components/ScenarioControls'
 import { ComparisonBoxes } from './components/ComparisonBoxes'
 import { Disclaimer } from './components/Disclaimer'
+import { manwon } from './format'
 import './App.css'
 
 export default function App() {
@@ -31,18 +32,32 @@ export default function App() {
     window.history.replaceState(null, '', `?${encodeInputs(inputs)}`)
   }, [inputs])
 
-  const calcInputs = inputs.mode === 'new' ? { ...inputs, leapMonthsPaid: 0 } : inputs
+  const newMode = inputs.mode === 'new'
+  // 신규 모드: 도약 신규가입 종료 → 도약 입력 무효(m=0), 연계가입 우대(defaultChecked)도 제외
+  const futureLinkIds = new Set(
+    BANKS.find((b) => b.id === inputs.futureBankId)?.future?.preferential.filter((p) => p.defaultChecked).map((p) => p.id),
+  )
+  const calcInputs = newMode
+    ? { ...inputs, leapMonthsPaid: 0, futurePrefs: inputs.futurePrefs.filter((id) => !futureLinkIds.has(id)) }
+    : inputs
   const result = compareSwitch(buildSwitchInput(calcInputs))
 
   const warnings: string[] = []
-  if (inputs.leapMonthly > PRODUCTS.leap.monthlyMax) warnings.push('도약계좌 월 납입 한도(70만원)를 초과했습니다.')
+  if (inputs.mode === 'switch' && inputs.leapMonthly > PRODUCTS.leap.monthlyMax) warnings.push('도약계좌 월 납입 한도(70만원)를 초과했습니다.')
   if (inputs.futureMonthly > PRODUCTS.future.monthlyMax) warnings.push('미래적금 월 납입 한도(50만원)를 초과했습니다.')
 
   return (
     <main className="app">
       <h1>청년적금 갈아타기 손익계산기</h1>
       <ModeTabs mode={inputs.mode} onChange={(mode) => set({ mode })} />
-      <DiffBanner profit={result.profit} switchTotal={result.switchTotal} keepTotal={result.keepTotal} mode={inputs.mode} />
+      {newMode ? (
+        <div className="result-headline">
+          <div className="rh-label">청년미래적금 3년 만기 예상 수령액</div>
+          <div className="rh-num">{manwon(result.futureMaturity.total)}</div>
+        </div>
+      ) : (
+        <DiffBanner profit={result.profit} switchTotal={result.switchTotal} keepTotal={result.keepTotal} />
+      )}
       <ScenarioControls inputs={inputs} set={set} />
       {warnings.length > 0 && <ul className="warnings">{warnings.map((w) => <li key={w}>{w}</li>)}</ul>}
       <ComparisonBoxes r={result} mode={inputs.mode} />

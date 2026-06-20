@@ -7,7 +7,7 @@ export function ModeTabs({ mode, onChange }: { mode: Mode; onChange: (m: Mode) =
         갈아타기 손익
       </button>
       <button role="tab" aria-selected={mode === 'new'} className={mode === 'new' ? 'on' : ''} onClick={() => onChange('new')}>
-        신규 가입 비교
+        미래적금 단독 계산
       </button>
     </div>
   )

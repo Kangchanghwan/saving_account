@@ -10,7 +10,7 @@ describe('App 스모크', () => {
   })
   it('모드 탭 전환이 동작한다', () => {
     render(<App />)
-    fireEvent.click(screen.getByText('신규 가입 비교'))
-    expect(screen.getByRole('tab', { selected: true }).textContent).toContain('신규')
+    fireEvent.click(screen.getByText('미래적금 단독 계산'))
+    expect(screen.getByRole('tab', { selected: true }).textContent).toContain('미래적금')
   })
 })
