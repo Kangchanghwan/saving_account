@@ -1,0 +1,610 @@
+@charset "utf-8";
+
+/* 2407 추가 */
+.service_ul button .icon6 {
+  background-image: url(https://rl9mnsqm6.toastcdn.net/ylt/resources/images/icon06.png);
+}
+
+.info_txt {
+  width: 25rem;
+  left: -11.5rem;
+}
+
+.justi-right  {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.kakao-link-wrap > a {
+  color: #333;
+}
+
+.ylt-bottom-bnr {
+  max-width: 100rem;
+  margin: 2rem auto 3rem;
+}
+.ylt-bottom-bnr > a {
+  display: inline-block;
+  margin: 3rem auto 0;
+}
+.ylt-bottom-bnr > a > img {width: 100%;}
+
+.ylt-bottom-bnr .bnr-mo {display: none;}
+.ylt-bottom-bnr .bnr-pc {display: block;}
+
+@media screen and (max-width: 768px) {
+  .info_txt {
+      width: 17rem;
+      left: -7.5rem;
+  }
+
+  .info_txt-right {
+      left: -8.5rem;
+  }
+
+  .info_txt-right::before {
+      transform: translate(1rem, -1.4rem);
+  }
+
+  .justi-right {
+      justify-content: space-between;
+  }
+  .ylt-bottom-bnr .bnr-mo {display: block;}
+  .ylt-bottom-bnr .bnr-pc {display: none;}
+}
+
+@media screen and (max-width: 418px) {
+  .info_txt {
+      width: 18rem;
+      left: -8.25rem;
+  }
+
+  .info_txt-right {
+      left: -12.25rem;
+  }
+
+  .info_txt-right::before {
+      transform: translate(3.99rem, -1.4rem);
+  }
+
+  .info_txt-left {
+      left: -4.8rem;
+  }
+
+  .info_txt-left::before {
+      transform: translate(-3.5rem, -1.4rem);
+  }
+
+  .dayConf .link_ka,
+  .dayConf .link_date {
+      margin: 0.4rem 0 1rem;
+  }
+}
+
+.toggle_wrap sup {
+  font-size: 1.3rem;
+}
+
+.list-line li {
+  margin: 0 0 0.8rem;
+}
+
+.pd-left-dep1 {
+  padding-left: 1.4rem
+}
+
+.pd-left-dep2 {
+  padding-left: 2rem
+}
+
+/* 240415 */
+.top_title-add {
+  padding: 0.8rem;
+  justify-content: space-between;
+}
+
+.top_title-add .ci-logo,
+.top_title-add .bi-logo {
+  display: flex;
+  align-items: center;
+  width: 140px;
+}
+
+.yl .top_title::after {
+  right: 0;
+}
+
+.top_title-add .ci-logo img,
+.top_title-add .bi-logo img {
+  width: 100%;
+  vertical-align: baseline;
+}
+
+.top_title-add .ci-logo img {}
+
+.top_title-add .txt {
+  flex-shrink: 0;
+  /* padding: 0 3rem; */
+  /* min-width: 77%;
+  width: 50%; */
+}
+
+@media screen and (max-width: 1200px) {
+  .top_title-add .txt {
+    width: 57%;
+  }
+}
+
+.yl-footer {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0.8rem;
+  height: initial;
+  align-items: flex-start;
+}
+
+.yl-footer .logo-wrap {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.yl-footer .logo-wrap .ci-logo,
+.yl-footer .logo-wrap .bi-logo {
+  display: flex;
+  align-items: center;
+  width: 128px;
+}
+
+.yl-footer .logo-wrap .ci-logo img,
+.yl-footer .logo-wrap .bi-logo img {
+  width: 100%;
+}
+
+.yl-footer .info-txt {
+  text-align: left;
+  width: 100%;
+  font-size: 1.4rem;
+  color: #666;
+}
+
+.yl-footer .info-txt .address {
+  padding: 0.8rem 0 0.4rem;
+}
+
+.yl-footer .info-txt .num .st {
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .yl-footer .info-txt {
+    font-size: 1.2rem;
+  }
+}
+
+
+
+/* 유지심사 */
+div.order_li-add {
+  width: 100%;
+}
+div.order_li-add ul.mini_list .arrow_wrap-center {
+  padding-top: 17px;
+}
+div.order_li-add .mini_list .arrow_wrap .arrow>span {
+  padding: 2px 0;
+  display: inline-block;
+}
+.date-point-table {
+  padding-top: 6rem;
+}
+.date-point-table .inner {
+  display: flex;
+  align-items: end;
+  text-align: center;
+}
+.date-point-table .line-item::before {
+  content: "";
+  border-right: 1px dashed #1158c3 !important;
+  height: 24px;
+  top: 0px;
+  position: absolute;
+  right: -1px;
+  z-index: 99;
+}
+/* .date-point-table ul.list li:first-child,
+    .date-point-table ul.list li:last-child {
+      border-right: 2px solid #1158c3 !important;
+    } */
+.date-point-table ul.list li:first-child>div {
+  border-left: 0;
+}
+.date-point-table ul.list li:first-child>div,
+.date-point-table ul.list li:last-child>div {
+  border-right: 0;
+  margin-right: 0px;
+}
+.date-point-table ul.list li div:nth-child(2) {
+  background-color: #eafffb;
+}
+.date-point-table ul.list {
+  display: flex;
+  flex-grow: 1;
+  background-color: #fff;
+}
+.date-point-table ul.list li {
+  width: 100%;
+  min-width: 110px;
+  position: relative;
+}
+.date-point-table ul.list li>div:first-child {
+  min-height: 24px;
+  border-top: none;
+  background-color: #eff2f7;
+  background-color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.date-point-table ul.list li>div {
+  border: 1px solid #ddd;
+  padding: 0 0.4rem;
+  min-height: 70px;
+  margin-right: -1px;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.date-point-table ul.list li>span {
+  display: block;
+  position: absolute;
+  top: -23px;
+  font-size: 1.1rem;
+  right: -15px;
+}
+/* .date-point-table .line-item::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 6px solid #1158c3;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      position: absolute;
+      top: -6px;
+      right: -5px;
+    } */
+.date-point-table .line-item::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background-color: #1158c3;
+  border-radius: 100px;
+  position: absolute;
+  top: -6px;
+  right: -3px;
+}
+.date-point-table ul.list li:first-child>span,
+.date-point-table ul.list li:last-child>span,
+.date-point-table ul.list li:nth-last-child(2)>span {
+  font-weight: bold;
+}
+.date-point-table .tit-box {
+  max-width: 128px;
+  min-width: 88px;
+  height: 140px;
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  display: flex;
+  border: 2px solid #1158c3;
+  border-radius: 12px;
+  align-items: center;
+  background-color: #eef8ff;
+}
+.date-point-table .check-date-wrap {
+  position: relative;
+}
+.date-point-table .check-date-wrap .check-date {
+  width: 46%;
+  position: absolute;
+  top: 13%;
+  left: 16.8%;
+  font-size: 1.2rem;
+  background-color: #9f8eff70;
+  border-radius: 20px;
+}
+.date-point-table .check-date-wrap .check-date>span.txt {
+  background-color: #d5cdff;
+  position: relative;
+  z-index: 99;
+  padding: 0px 4px;
+  border-radius: 50px;
+  color: #202020;
+}
+.date-point-table .check-date-wrap .check-date>span.line {
+  content: "";
+  position: absolute;
+  width: 96%;
+  top: 51%;
+  transform: translate(0, -50%);
+  left: 5px;
+  height: 2px;
+  border-top: 1px dashed red;
+  z-index: 0;
+}
+.date-point-table .check-date-wrap .check-date>span.date {
+  content: "";
+  position: absolute;
+  top: -62px;
+  right: -16px;
+  font-size: 1.1rem;
+  color: #5d35bf;
+  text-align: left;
+}
+.date-point-table .check-date-wrap .check-date>span.date-line {
+  content: "";
+  position: absolute;
+  border-right: 1px dashed #3c20af;
+  top: -38px;
+  right: 0px;
+  height: 40px;
+}
+.date-point-table .check-date-wrap .check-date>span.date-line::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background-color: #3c20af;
+  border-radius: 100px;
+  position: absolute;
+  top: -7px;
+  right: -3px;
+}
+.date-point-table .check-date-wrap .check-date>span.line::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid red;
+  border-left: 4px solid transparent;
+  border-right: 3px solid transparent;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  transform: rotate(90deg);
+}
+.date-point-table .check-date-wrap .check-date>span.line::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 5px solid red;
+  border-left: 4px solid transparent;
+  border-right: 3px solid transparent;
+  position: absolute;
+  top: -3px;
+  right: -6px;
+  transform: rotate(270deg);
+}
+.date-point-table .check-date-wrap .check-date>span.line::after,
+.date-point-table .check-date-wrap .check-date>span.line::before,
+.date-point-table .check-date-wrap .check-date>span.line  {
+  border-top-color: #5d35bf;
+}
+
+.date-point-table .p-1  {
+  color: #5f33a7;
+}
+
+@media (max-width: 420px) {
+
+  .date-point-table ul.list li>div,
+  .date-point-table .tit-box {
+    box-sizing: border-box;
+    padding: 0.5rem 0.2rem;
+    font-size: 1.2rem;
+  }
+
+  .date-point-table ul.list li {
+    min-width: 42px;
+  }
+
+  .date-point-table ul.list li>div:first-child {
+    min-height: 20px;
+  }
+
+  .date-point-table ul.list li>div {
+    min-height: 62px;
+  }
+
+  .date-point-table ul.list li>span {
+    display: block;
+    position: absolute;
+    top: -22px;
+    font-size: 1rem;
+    right: -14px;
+  }
+
+  .date-point-table .tit-box {
+    height: 123px;
+    min-width: 50px;
+    min-height: 50px;
+  }
+
+  .date-point-table .line-item::before {
+    height: 30px;
+    top: -2px;
+  }
+
+  .date-point-table .check-date-wrap .check-date {
+    font-size: 1rem;
+    top: 14%;
+  }
+
+  .date-point-table {
+    overflow-y: hidden;
+    padding-top: 5rem;
+    margin-top: 0;
+  }
+
+  .date-point-table .check-date-wrap .check-date>span.date {
+    content: "";
+    position: absolute;
+    top: -62px;
+    right: -16px;
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+@media (max-width: 686px) {
+  .date-point-table {
+    overflow-y: hidden;
+    padding-top: 5rem;
+  }
+  .date-point-table .tit-box {
+    min-width: 75px;
+  }
+}
+
+/* //유지심사 */
+
+/* 정부기여금 구간 */
+
+.drt-table-type1.date-point-table   {padding: 0;}
+.drt-table-type1.date-point-table .inner    {margin-right: -1px;}
+.drt-table-type1.date-point-table ul.list   {
+    background-color: #fff;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #b1b1b1;
+}
+.drt-table-type1.date-point-table ul.list li    {
+    min-width: 68px;
+    word-break: keep-all;
+    line-height: 1.2;
+}
+.drt-table-type1.date-point-table ul.list li.line-last  {
+    /* max-width: 70px; */
+}
+.drt-table-type1.date-point-table ul.list li:first-child    {
+    min-width: 110px;
+    max-width: 188px;
+    background-color: transparent;
+}
+.drt-table-type1.date-point-table ul.list li:first-child>div    {
+    padding: 0.8rem 0.4rem;
+}
+.drt-table-type1.date-point-table ul.list li:last-child {min-width: 70px;}
+
+.drt-table-type1.date-point-table span.graph-com   {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 4rem;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.drt-table-type1.date-point-table span.graph-txt    {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    width: 100%;
+    z-index: 20;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.drt-table-type1.date-point-table ul.list li>div:first-child    {
+    background-color: #eff2f7;
+    height: 4rem;
+    line-height: 1.3;
+    font-size: 1.4rem;
+}
+
+.drt-table-type1.date-point-table span.graph-w-50   {width: 50%;} 
+
+.drt-table-type1.date-point-table span.graph-blue,
+.drt-table-type1.date-point-table .blue-bg     {background-color: #d3f6ff;}
+
+.drt-table-type1.date-point-table span.graph-red,
+.drt-table-type1.date-point-table .red-bg      {background-color: #f6e5ed;}
+
+.drt-table-type1.date-point-table ul.list li:first-child,
+.drt-table-type1.date-point-table ul.list li.line-last,
+.drt-table-type1.date-point-table ul.list li.line-last span.graph-com   {border-right: 1px solid;}
+
+.drt-table-type1.date-point-table ul.list li:first-child,
+.drt-table-type1.date-point-table ul.list li.line-last  {border-color: #979797;}
+
+.drt-table-type1.date-point-table ul.list li.line-last span.graph-com,
+.drt-table-type1.date-point-table span.graph-com    {border-color: #8e8e8e;}
+
+
+.drt-table-type1.date-point-table .line-item::after {display: none;}
+.drt-table-type1.date-point-table ul.list li>div    {
+    border: none;
+    position: relative;
+    margin-right: 0px;
+    height: 7.6rem;
+    border-bottom: 1px solid #ddd;
+}
+.drt-table-type1.date-point-table ul.list li>div:has(span.graph-com)     {
+    padding: 0;
+    justify-content: flex-start;
+    
+}
+.drt-table-type1.date-point-table ul.list li div:nth-child(2) {
+    background-color: transparent;
+}
+.drt-table-type1.date-point-table .line-step::before {
+    content: "";
+    border-right: 1px dashed #1158c3 !important;
+    position: absolute;
+    height: 55px;
+    top: 40px;
+    right: 50%;
+    z-index: 1;
+}
+.drt-table-type1.date-point-table ul.list li:nth-child(4) .line-step::before     {
+    height: 131px;
+}
+.drt-table-type1.date-point-table ul.list li:nth-child(5) .line-step::before     {
+    height: 205px;
+}
+
+.drt-table-type1.date-point-table li.item-blue > div:nth-child(2) span.graph-txt    {left: 26%;}
+.drt-table-type1.date-point-table li.item-blue > div:nth-child(3) span.graph-txt    {left: 72%;}
+.drt-table-type1.date-point-table li.item-blue > div:nth-child(4) span.graph-txt    {left: 136%;}
+.drt-table-type1.date-point-table li.item-blue > div:nth-child(5) span.graph-txt    {left: 176%;}
+.drt-table-type1.date-point-table li.item-blue > div:nth-child(6) span.graph-txt    {left: 176%;}
+
+.drt-table-type1.date-point-table li.item-red > div:nth-child(2) span.graph-txt    {right: 146%;}
+.drt-table-type1.date-point-table li.item-red > div:nth-child(3) span.graph-txt    {right: 97%;}
+.drt-table-type1.date-point-table li.item-red > div:nth-child(4) span.graph-txt    {right: 49%;}
+.drt-table-type1.date-point-table .zindex2 {z-index: 2;}
+.drt-table-type1.date-point-table .group-bg {
+    padding: 0.8rem 0.4rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    gap: 0.4rem;
+}
+.drt-table-type1.date-point-table .group-bg > span {
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.6rem;
+}
+@media (max-width: 870px)   {
+    .drt-table-type1.date-point-table ul.list li>div:first-child    {font-size: 1.2rem;}
+}
+@media (max-width: 420px)   {
+   /* .drt-table-type1.date-point-table ul.list li>div {
+        min-height: 82px;
+        min-width: 80px;
+    } */
+    .drt-table-type1.date-point-table ul.list li {
+        min-width: 94px;
+    }
+    .drt-table-type1.date-point-table ul.list li>div,
+    .drt-table-type1.date-point-table span.graph-txt    {font-size: 1.2rem;}
+}
+
+/* //정부기여금 구간 */

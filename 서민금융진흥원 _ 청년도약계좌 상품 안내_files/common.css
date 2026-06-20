@@ -1,0 +1,142 @@
+@import url(reset.css?241128);
+@import url(jquery-ui.min.css);
+@import url(datepicker.css);
+@import url(input_select.css?20240202);
+@import url(agree.css);
+@import url(popup.css?20240202);
+/*240611*/
+/*--------------scroll----------------*/
+.scroll {
+  overflow-y: auto;
+}
+.overflow-y-h {overflow-y: hidden;}
+.con_scroll::-webkit-scrollbar,
+.table_scroll tbody::-webkit-scrollbar,
+.scroll::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+  background-color: rgba(112, 125, 141, 0.12);
+  border: 2px solid white;
+}
+
+.con_scroll::-webkit-scrollbar-thumb,
+.table_scroll tbody::-webkit-scrollbar-thumb,
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #707d8d;
+  border: 2px solid white;
+  border-bottom: 0;
+  border-top: 0;
+  border-radius: 10px;
+}
+/* ---------color----------- */
+.t_red {
+  color: #e23a3a;
+}
+.t_blue {
+  color: #344ecb;
+}
+.t_skyblue {
+  color: #3351a7;
+}
+.t_gray {
+  color: #858585;
+}
+
+.invert {
+  -webkit-filter: invert(0);
+  filter: invert(0);
+}
+
+.invert .inner_wrap {
+  overflow-y: auto;
+}
+.text_underline {
+  text-decoration: underline;
+}
+/* border */
+.line-right-color {border-right: 1px solid #d5d5d5 !important;}
+
+/* box type */
+.box-line  {
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* space */
+.txt-left-dep1 {margin-left: 1.4rem;}
+.txt-left-dep2 {margin-left: 2rem;}
+
+/* symbol */
+.txt-symbol-circle {
+  position: relative;
+  padding-left: 1.6rem;
+  display: block;
+}
+.txt-symbol-circle::before    {
+  content: "ㅇ";
+  width: auto;
+  position: absolute;
+  left: 0;
+}
+
+.txt-symbol-minus {
+  position: relative;
+  padding-left: 1.6rem;
+  display: block;
+}
+.txt-symbol-minus::before    {
+  content: "-";
+  width: auto;
+  position: absolute;
+  left: 0;
+} 
+.txt-symbol-minus.txt-left-dep1 {
+  padding-left: 1rem;
+}
+
+.txt-symbol-star {
+  position: relative;
+  padding-left: 1.6rem;
+  display: block;
+}
+.txt-symbol-star::before    {
+  content: "*";
+  width: auto;
+  position: absolute;
+  left: 0;
+}
+.txt-symbol-star.txt-left-dep1,
+.txt-symbol-star.txt-left-dep2 {
+  padding-left: 1rem;
+}
+
+.txt-symbol-dot {
+  position: relative;
+  padding-left: 1.4rem;
+  display: block;
+}
+.txt-symbol-dot::before    {
+  content: "・";
+  width: auto;
+  position: absolute;
+  left: 0;
+}
+
+.txt-symbol-1 {
+  position: relative;
+  padding-left: 1.6rem;
+  display: block;
+}
+.txt-symbol-1::before    {
+  content: "※";
+  width: auto;
+  position: absolute;
+  left: 0;
+}
+
+/* text */
+.t-align-left {
+  text-align: left !important;
+}

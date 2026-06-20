@@ -1,0 +1,30 @@
+/* 유량제어 style */
+.netfunnel-wrap{ position: fixed; left: 0; top: 0; z-index: 99999999999; font-size: 1.5rem; }
+.control-modal-wrap{ position: fixed; top: 0; left:0; width: 100%; height: 100vh; }
+.control-modal-wrap::after{ content: ""; position: absolute; top: 0; left:0; z-index: -1; display: block;
+  width: 100%; height: 100%; background: #333; opacity: .2; }
+.control-modal-wrap .control-modal{ position: relative; height: 100vh; }
+.control-modal-wrap .control-modal .control-modal-box{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: calc( 100% - 30px ); max-width: 767px; height: 500px; background: #fff; border-radius: 1rem; text-align: center; }
+.control-modal-wrap .control-modal .control-modal-box .img-wrap{ display: flex; justify-content: center; align-items: center; height: 80px; text-align: center; }
+.control-modal-wrap .control-modal .control-modal-box .img-wrap img{ max-width: 120px; }
+.control-modal-wrap .control-modal .control-modal-box .contents{ display: block; height: calc( 100% - 140px ); }
+.control-modal-wrap .control-modal .control-modal-box .contents .tit{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  font-size: 1.7rem; font-weight: 500; height: 50px; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info{ height: calc( 100% - 130px ); background: #eee; display: flex; justify-content: center; align-items: center; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info dl{ width: 100%; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info .num-tit{ padding-bottom: 1rem; font-size: 1.5rem; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info .num{ display: block; font-size: 2.4rem; font-weight: 700; color: #0e126a; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info .num span{ font-weight: 700; color: #0e126a; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info .time{ padding: 1rem 0; font-size: 1.5rem; }
+.control-modal-wrap .control-modal .control-modal-box .contents .now-info .time .point{ font-weight: 700; color: #0e126a; }
+.control-modal-wrap .control-modal .control-modal-box .contents .progress-bar-wrap{ position: relative; margin: 0 auto; width: 90%; max-width: 600px; height: 60px; }
+.control-modal-wrap .control-modal .control-modal-box .contents .progress-bar-wrap .progress-bar{ position: absolute; top: 50%; left: 0; transform: translate(0%, -50%);
+  width: 0; height: 8px; background: #0e126a; border-radius: 10px; transition: .5s; }
+
+.control-modal-wrap .control-modal .control-modal-box .contents .progress-bar-wrap .progress-bar > div > div{ border-radius: 100rem; background:#0e126a !important; }
+.control-modal-wrap .control-modal .control-modal-box .contents .progress-bar-wrap .progress-bar-back{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: calc( 100% + 7px ); height: 15px; background: #ccc; border-radius: 15px; }
+.control-modal-wrap .control-modal .control-modal-box .contents .progress-bar-wrap .icon-box{ position: absolute; transition: .5s; width: 60px; height: 60px; transform: translateX(-50%); background: url("https://rl9mnsqm6.toastcdn.net/drt/images/modal/2.png") no-repeat top center; background-size: 50px; animation: poyong 2s infinite; }
+.control-modal-wrap .control-modal .control-modal-box .contents .txt{ display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 500; height: 80px; line-height: 2.2rem }
+.control-modal-wrap .control-modal .control-modal-box .attention-info{ display: flex; justify-content: center; font-size: 1.5rem; line-height: 2.2rem; height: 60px; }
