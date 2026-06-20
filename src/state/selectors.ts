@@ -17,13 +17,27 @@ export function buildSwitchInput(s: AppInputs): SwitchInput {
   const futureProduct = futureBank.future ?? { baseRate: 0.05, maxRate: 0.08, preferential: [] }
   const bracket = LEAP_BRACKETS.find((b) => b.id === s.leapBracketId) ?? LEAP_BRACKETS[0]
 
-  const mPaid = Math.max(0, s.leapMonthsPaid)
+  let mPaid: number
+  let avgMonthly: number
+  let future: number
+  let remaining: number
+  if (s.leapInputMode === 'balance') {
+    remaining = Math.min(Math.max(0, s.leapMonthsRemaining), LEAP_TERM)
+    mPaid = LEAP_TERM - remaining
+    avgMonthly = mPaid > 0 ? Math.round(s.leapPaidPrincipal / mPaid) : 0
+    future = s.leapFutureMonthly
+  } else {
+    mPaid = Math.max(0, s.leapMonthsPaid)
+    avgMonthly = s.leapMonthly
+    future = s.leapMonthly
+    remaining = Math.max(0, LEAP_TERM - mPaid)
+  }
 
   return {
-    leapAvgMonthly: s.leapMonthly,
+    leapAvgMonthly: avgMonthly,
     leapMonthsPaid: mPaid,
-    leapFutureMonthly: s.leapMonthly,
-    leapMonthsRemaining: Math.max(0, LEAP_TERM - mPaid),
+    leapFutureMonthly: future,
+    leapMonthsRemaining: remaining,
     leapAppliedRate: appliedRate(leapProduct, s.leapPrefs),
     leapBaseRate: leapProduct.baseRate,
     leapBracket: bracket,
