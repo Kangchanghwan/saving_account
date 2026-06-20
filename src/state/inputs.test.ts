@@ -50,4 +50,19 @@ describe('inputs URL 직렬화', () => {
     expect(decodeInputs('lim=monthly&lmp=20').leapInputMode).toBe('monthly')
     expect(decodeInputs('lim=balance&lpp=18900000').leapInputMode).toBe('balance')
   })
+  it('우대 직접입력 필드 encode→decode 라운드트립', () => {
+    const s = { ...DEFAULT_INPUTS, leapRateDirect: true, leapRateOverride: 0.008 }
+    const r = decodeInputs(encodeInputs(s))
+    expect(r.leapRateDirect).toBe(true)
+    expect(r.leapRateOverride).toBeCloseTo(0.008, 6)
+  })
+  it('레거시 URL(lrd/lro 없음)은 직접입력 off + override 0', () => {
+    const r = decodeInputs('lm=700000&lmp=20')
+    expect(r.leapRateDirect).toBe(false)
+    expect(r.leapRateOverride).toBe(0)
+  })
+  it('기본값은 직접입력 off', () => {
+    expect(DEFAULT_INPUTS.leapRateDirect).toBe(false)
+    expect(DEFAULT_INPUTS.leapRateOverride).toBe(0)
+  })
 })

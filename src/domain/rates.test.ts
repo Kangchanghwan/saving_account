@@ -21,4 +21,16 @@ describe('appliedRate', () => {
   it('체크 없으면 기본금리', () => {
     expect(appliedRate(bp, [])).toBe(0.05)
   })
+  it('override 주어지면 base + override (칩 무시)', () => {
+    expect(appliedRate(bp, ['a', 'b'], 0.008)).toBeCloseTo(0.058, 6) // 0.05+0.008
+  })
+  it('override는 maxRate로 클램프', () => {
+    expect(appliedRate(bp, [], 0.05)).toBe(0.08) // 0.05+0.05=0.10 → 0.08
+  })
+  it('override 0이면 base만(칩 무시)', () => {
+    expect(appliedRate(bp, ['a', 'b', 'c'], 0)).toBe(0.05)
+  })
+  it('override undefined면 기존 칩 합산 동작', () => {
+    expect(appliedRate(bp, ['a', 'b'], undefined)).toBeCloseTo(0.065, 6)
+  })
 })

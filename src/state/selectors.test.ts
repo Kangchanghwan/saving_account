@@ -40,4 +40,23 @@ describe('buildSwitchInput', () => {
     expect(si.leapMonthsPaid).toBe(0)
     expect(si.leapAvgMonthly).toBe(0)
   })
+  it('leapRateDirect면 도약금리는 base+override (칩 무시)', () => {
+    const s = {
+      ...DEFAULT_INPUTS,
+      leapBankId: 'shinhan',          // base 0.045
+      leapPrefs: ['salary', 'card'],  // 칩 합 0.6%p — 무시돼야 함
+      leapRateDirect: true,
+      leapRateOverride: 0.008,
+    }
+    expect(buildSwitchInput(s).leapAppliedRate).toBeCloseTo(0.053, 6)
+  })
+  it('leapRateDirect false면 기존 칩 합산', () => {
+    const s = {
+      ...DEFAULT_INPUTS,
+      leapBankId: 'shinhan',
+      leapPrefs: ['salary', 'card'],  // 0.003 + 0.003
+      leapRateDirect: false,
+    }
+    expect(buildSwitchInput(s).leapAppliedRate).toBeCloseTo(0.051, 6)
+  })
 })
